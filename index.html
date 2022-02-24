@@ -9,24 +9,50 @@
   </head>
   <body>
     <h1>Hogwarts Student List</h1>
+    <hr>
+    
     <p>
-      Filter:
-      <button class="filter" data-action="filter" data-filter="filter_1">Filter 1</button>
-      <button class="filter" data-action="filter" data-filter="filter_2">Filter 2</button>
-      <button class="filter" data-action="filter" data-filter="filter_3">Filter 3</button>
+      Filter by house:
+      <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
+      <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
+      <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
+      <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
+     </p>
+
+    <p>
+      Filter by student-staus:
+      <button class="filter" data-action="filter" data-filter="squad">Squad</button>
+      <button class="filter" data-action="filter" data-filter="prefect">Prefect</button>
+      <button class="filter" data-action="filter" data-filter="expelled">Expelled Students</button>
+      <button class="filter" data-action="filter" data-filter="non_expelled">Non Expelled Students</button>
+
+
     </p>
 
-    <hr />
+    <p>        
+      Filter by gender:
+      <button class="filter" data-action="filter" data-filter="girls">Show girls</button>
+      <button class="filter" data-action="filter" data-filter="boys">Show boys</button>
+      </p>
 
-    <table id="list">
+      <p>
+      Filter by bloodtype:
+      <button class="filter" data-action="filter" data-filter="pure_blood">Pure bloods</button>
+      <button class="filter" data-action="filter" data-filter="half_blood">Half bloods</button>
+      <button class="filter" data-action="filter" data-filter="muggles">Muggles</button>
+       </p>
+
+      <button class="filter" data-action="filter" data-filter="remove_filter">Remove filter</button>
+    </p>
+
+    <hr>
+
+    <table id="student_list">
       <thead>
         <tr id="sorting">
-          <th data-action="sort" data-sort-direction="asc" data-sort="prefect">⭐</th>
-          <!-- <th data-action="sort" data-sort-direction="asc" data-sort="name">Name</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="type">Type</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="desc">Description</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="age">Age</th> -->
-          <th></th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="firstname">First name</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="lastname">Last name</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
         </tr>
       </thead>
       <tbody>
@@ -36,13 +62,12 @@
 
     <template id="student">
       <tr>
-        <td data-field="prefect">⭐</td>
-        <!-- <td data-field="name">NAME</td>
-        <td data-field="type">TYPE</td>
-        <td data-field="desc">DESCRIPTION</td>
-        <td data-field="age">AGE</td> -->
+        <td data-field="firstname">FIRST NAME</td>
+        <td data-field="lastname">LAST NAME</td>
+        <td data-field="house">HOUSE</td>
       </tr>
     </template>
+
 
     <script src="script.js"></script>
   </body>
