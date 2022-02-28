@@ -19,52 +19,63 @@
       <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
      </p>
 
+     <p>        
+       Filter by gender:
+       <button class="filter" data-action="filter" data-filter="girls">Girls</button>
+       <button class="filter" data-action="filter" data-filter="boys">Boys</button>
+       </p>
+
     <p>
       Filter by student-staus:
       <button class="filter" data-action="filter" data-filter="squad">Squad</button>
       <button class="filter" data-action="filter" data-filter="prefect">Prefect</button>
       <button class="filter" data-action="filter" data-filter="expelled">Expelled Students</button>
       <button class="filter" data-action="filter" data-filter="non_expelled">Non Expelled Students</button>
-
-
     </p>
 
-    <p>        
-      Filter by gender:
-      <button class="filter" data-action="filter" data-filter="girls">Girls</button>
-      <button class="filter" data-action="filter" data-filter="boys">Boys</button>
-      </p>
 
-      <p>
-      Filter by bloodtype:
-      <button class="filter" data-action="filter" data-filter="pure_blood">Pure bloods</button>
+      <!-- <p> -->
+      <!-- Filter by bloodtype: -->
+      <!-- <button class="filter" data-action="filter" data-filter="pure_blood">Pure bloods</button>
       <button class="filter" data-action="filter" data-filter="half_blood">Half bloods</button>
       <button class="filter" data-action="filter" data-filter="muggles">Muggles</button>
-       </p>
+       </p> -->
 
-      <button class="filter" data-action="filter" data-filter="remove_filter">Remove filter</button>
+      <button class="filter" data-action="filter" data-filter="*">Remove filter</button>
     </p>
 
     <hr>
 
+    <p>
+      Sort the list:
+      <button data-action="sort" data-sort-direction="asc" data-sort="firstName">A-Z</button>
+      <button data-action="sort" data-sort-direction="desc" data-sort="firstName">Z-A</button>
+      <button data-action="sort" data-sort-direction="desc" data-sort="prefect">Prefects</button>
+    </p>
+
+
     <table id="student_list">
       <thead>
         <tr id="sorting">
-          <th data-action="sort" data-sort-direction="asc" data-sort="firstname">First name</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="lastname">Last name</th>
+          <!-- <th data-action="sort" data-sort-direction="asc" data-sort="prefect">🎖</th> -->
+          <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="list">
         <!-- student template will be copied and inserted here -->
       </tbody>
     </table>
 
     <template id="student">
       <tr>
-        <td data-field="firstname">FIRST NAME</td>
-        <td data-field="lastname">LAST NAME</td>
+        <td data-field="firstName">FIRST NAME</td>
+        <td data-field="lastName">LAST NAME</td>
         <td data-field="house">HOUSE</td>
+        <td>
+          <!-- <button id="read_more">Read more</button> -->
+        </td>
       </tr>
     </template>
 
