@@ -5,17 +5,20 @@ let filteredStudents;
 
 const settings = {
   filterBy: "all",
+  sortBy: "firstName",
+  sortDir: "asc",
 };
 
 window.addEventListener("DOMContentLoaded", start);
 
-// ________ START FUNCTIONS WITH ALL EVENT LISTENERS ________
+// ________________ START FUNCTION ________________
 function start() {
   console.log("The script is being read");
   registerButtons();
   getJson();
 }
-// -------- GET JSON --------
+
+// ________________ GET JSON ________________
 async function getJson() {
   console.log("getJson");
   const url = "https://petlatkea.dk/2021/hogwarts/students.json";
@@ -25,9 +28,10 @@ async function getJson() {
   createStudents(studentArray);
 }
 
-// -------- REGISTRER BUTTONS --------
+// ________________ REGISTRER BUTTONS ________________
 function registerButtons() {
   document.querySelectorAll("[data-action='filter']").forEach((button) => button.addEventListener("click", selectFilter));
+  document.querySelectorAll("[data-action='sort']").forEach((button) => button.addEventListener("click", selectSort));
 }
 
 function createStudents(data) {
@@ -35,9 +39,8 @@ function createStudents(data) {
   displayList(studentArray);
 }
 
-// -------- CREATE THE STUDENT OBJECTS WITH CLEANED/PREPARED DATA --------
+// ________________ CREATE THE STUDENT OBJECT, WITH CLEANED/PREPARED DATA ________________
 function prepareObject(object) {
-  // Define a template for the data objects
   const Student = {
     firstName: "",
     lastName: "",
@@ -53,12 +56,12 @@ function prepareObject(object) {
 
   const student = Object.create(Student);
 
-  // trim all the objects
+  // ----- trim all the objects
   let originalName = object.fullname.trim();
   let originalHouse = object.house.trim();
   let originalGender = object.gender.trim();
 
-  // ----- FIRST NAME -----
+  // ----- cleaning first name
   if (originalName.includes(" ")) {
     student.firstName = originalName.substring(originalName.indexOf(0), originalName.indexOf(" "));
   } else {
@@ -66,31 +69,31 @@ function prepareObject(object) {
   }
   student.firstName = student.firstName.substring(0, 1).toUpperCase() + student.firstName.substring(1).toLowerCase();
 
-  //----- MIDDLE NAME -----
+  // ----- cleaning middle name
   student.middleName = originalName.substring(originalName.indexOf(" ") + 1, originalName.lastIndexOf(" "));
   student.middleName = student.middleName.substring(0, 1).toUpperCase() + student.middleName.substring(1).toLowerCase();
 
-  //----- NICK NAME -----
+  //----- cleaning nickname
   if (originalName.includes('"')) {
     student.middleName = undefined;
     student.nickName = originalName.substring(originalName.indexOf('"') + 1, originalName.lastIndexOf('"'));
   }
 
-  // ----- LAST NAME -----
+  // ----- cleaning last name
   if (originalName.includes(" ")) {
     student.lastName = originalName.substring(originalName.lastIndexOf(" ") + 1);
     student.lastName = student.lastName.substring(0, 1).toUpperCase() + student.lastName.substring(1).toLowerCase();
   }
 
-  // ----- HOUSE -----
+  // ----- cleaning house
   student.house = originalHouse;
   student.house = student.house.substring(0, 1).toUpperCase() + student.house.substring(1).toLowerCase();
 
-  // ----- GENDER -----
+  // ----- cleaning gender
   student.gender = originalGender;
   student.gender = student.gender.substring(0, 1).toUpperCase() + student.gender.substring(1).toLowerCase();
 
-  // ----- IMAGE -----
+  // ----- cleaning images
   let studentPicture = new Image();
   studentPicture.scr = "images/" + student.lastName + ".png";
   student.image = studentPicture.scr;
@@ -99,37 +102,41 @@ function prepareObject(object) {
   return student;
 }
 
-// -------- DISPLAYING THE STUDENT LIST --------
+// ________________ DISPLAYING THE STUDENT LIST ________________
 function displayList(list) {
   document.querySelector("#student_list tbody").innerHTML = "";
   list.forEach((student) => displayStudent(student));
 }
 
-// -------- DEFINE THE STUDENTS --------
+// ________________ DEFINE AND APPEND THE STUDENT-OBJECTS ________________
+
 function displayStudent(student) {
   const clone = document.querySelector("template#student").content.cloneNode(true);
 
-  clone.querySelector("[data-field=firstname]").textContent = student.firstName;
-  clone.querySelector("[data-field=lastname]").textContent = student.lastName;
+  clone.querySelector("[data-field=firstName]").textContent = student.firstName;
+  clone.querySelector("[data-field=lastName]").textContent = student.lastName;
   clone.querySelector("[data-field=house]").textContent = student.house;
 
-  // -------- TO DO: prefects
+  // ----- TO DO: prefects
+
   document.querySelector("#student_list tbody").appendChild(clone);
 }
 
-// -------- BUILDING NEW LIST ACCORDING TO THE CHOSEN FILTER --------
+// ________________ BUILDING A NEW LIST  ________________
 function buildList() {
   const currentList = filterList(studentArray);
-  displayList(currentList);
+  const sortedList = sortList(currentList);
+  displayList(sortedList);
 }
 
-// Filtering function which takes a filtering function as an argument
+// ________________ FILTERING ________________
+// ----- Filtering function which takes a filtering function as an argument
 function prepareData(filter) {
   filteredStudents = studentArray.filter(filter);
   return filteredStudents;
 }
 
-//------------------- ALL FILTER OPTIONS -------------------
+// ----- list of filter options
 function filterList(filteredList) {
   if (settings.filterBy === "gryffindor") {
     filteredList = studentArray.filter(filterGryffindor);
@@ -147,17 +154,20 @@ function filterList(filteredList) {
   return filteredList;
 }
 
-function selectFilter(event) {
-  const filter = event.target.dataset.filter;
+// ----- the user picks a filter, and this is stored in the filter-variable, then sending this as a parameter to call setFilter function
+function selectFilter(userEvent) {
+  const filter = userEvent.target.dataset.filter;
   setFilter(filter);
 }
+
+// ----- refering to the settings variable, and using the filter argument from selectFilter
 function setFilter(filter) {
   settings.filterBy = filter;
   buildList();
-  console.log(`Filter: ${filter}`);
+  console.log(`Chosen filter: ${filter}`);
 }
 
-// -------- ALL FILTERING FUNCTIONS --------
+// -------- all filter functions
 function filterGryffindor(student) {
   return student.house === "Gryffindor";
 }
@@ -177,20 +187,52 @@ function filterGirls(student) {
   return student.gender === "Girl";
 }
 
+// ________________ ALL SORTING FUNCTIONS ________________
+// -------- sorting options
+function selectSort(event) {
+  const sortBy = event.target.dataset.sort;
+  const sortDir = event.target.dataset.sortDirection;
+  console.log("Sorting by:", sortBy, "- in the sort direction:", sortDir);
+
+  setSorting(sortBy, sortDir);
+}
+
+function setSorting(sortBy, sortDir) {
+  settings.sortBy = sortBy;
+  settings.sortDir = sortDir;
+  buildList();
+}
+
+function sortList(sortedList) {
+  let direction = 1;
+  if (settings.sortDir === "desc") {
+    direction = -1;
+  } else {
+  }
+
+  sortedList = sortedList.sort(compareSortOption);
+  console.log("User chose to sort by:", settings.sortBy);
+
+  // the compare function compares two elements and return its opinion on which element should be first when sorted
+  function compareSortOption(a, b) {
+    if (a[settings.sortBy] < b[settings.sortBy]) {
+      return -1 * direction;
+    } else {
+      return 1 * direction;
+    }
+  }
+  return sortedList;
+}
+
+// -------- TO DO: SEARCHFUNCTION --------
+// function search() {}
+
 function filterExpelled() {}
 function filterNonExpelled() {}
 function filterSquad() {}
 function filterPureblood() {}
 function filterHalfblood() {}
 function filterMuggle() {}
-
-function removeFilter() {}
-
-// -------- ALL SORTING FUNCTIONS --------
-function sortFistName() {}
-function sortLastName() {}
-function sortHouse() {}
-function sortPrefect() {}
 
 // -------- SEARCHFUNCTION --------
 function search() {}
