@@ -56,6 +56,7 @@ function prepareObject(object) {
   // trim all the objects
   let originalName = object.fullname.trim();
   let originalHouse = object.house.trim();
+  let originalGender = object.gender.trim();
 
   // ----- FIRST NAME -----
   if (originalName.includes(" ")) {
@@ -85,7 +86,11 @@ function prepareObject(object) {
   student.house = originalHouse;
   student.house = student.house.substring(0, 1).toUpperCase() + student.house.substring(1).toLowerCase();
 
-  // // ----- IMAGE -----
+  // ----- GENDER -----
+  student.gender = originalGender;
+  student.gender = student.gender.substring(0, 1).toUpperCase() + student.gender.substring(1).toLowerCase();
+
+  // ----- IMAGE -----
   let studentPicture = new Image();
   studentPicture.scr = "images/" + student.lastName + ".png";
   student.image = studentPicture.scr;
@@ -134,6 +139,10 @@ function filterList(filteredList) {
     filteredList = studentArray.filter(filterHufflepuff);
   } else if (settings.filterBy === "ravenclaw") {
     filteredList = studentArray.filter(filterRavenclaw);
+  } else if (settings.filterBy === "boys") {
+    filteredList = studentArray.filter(filterBoys);
+  } else if (settings.filterBy === "girls") {
+    filteredList = studentArray.filter(filterGirls);
   }
   return filteredList;
 }
@@ -161,12 +170,16 @@ function filterHufflepuff(student) {
 function filterRavenclaw(student) {
   return student.house === "Ravenclaw";
 }
+function filterBoys(student) {
+  return student.gender === "Boy";
+}
+function filterGirls(student) {
+  return student.gender === "Girl";
+}
 
 function filterExpelled() {}
 function filterNonExpelled() {}
 function filterSquad() {}
-function filterBoys() {}
-function filterGirls() {}
 function filterPureblood() {}
 function filterHalfblood() {}
 function filterMuggle() {}
