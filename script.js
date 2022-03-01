@@ -3,6 +3,7 @@ let students;
 let studentArray = [];
 let filteredStudents;
 
+// ----- the setting is making sure the filter and sort functions have a default
 const settings = {
   filterBy: "all",
   sortBy: "firstName",
@@ -36,7 +37,7 @@ function registerButtons() {
 
 function createStudents(data) {
   studentArray = data.map(prepareObject);
-  displayList(studentArray);
+  buildList();
 }
 
 // ________________ CREATE THE STUDENT OBJECT, WITH CLEANED/PREPARED DATA ________________
@@ -49,6 +50,7 @@ function prepareObject(object) {
     image: "",
     house: "",
     gender: "",
+    prefect: false,
     bloodStatus: "",
     inquisitorial: false,
     expelled: false,
@@ -117,12 +119,28 @@ function displayStudent(student) {
   clone.querySelector("[data-field=lastName]").textContent = student.lastName;
   clone.querySelector("[data-field=house]").textContent = student.house;
 
-  // ----- TO DO: prefects
+  // ----- prefects
+  if (student.prefect === true) {
+    clone.querySelector("[data-field=prefect]").textContent = "🎖";
+  } else {
+    clone.querySelector("[data-field=prefect]").textContent = "☆";
+  }
+
+  clone.querySelector("[data-field=prefect]").addEventListener("click", clickPrefect);
+  function clickPrefect() {
+    console.log(student);
+    if (student.prefect === true) {
+      student.prefect = false;
+    } else {
+      student.prefect = true;
+    }
+    buildList();
+  }
 
   document.querySelector("#student_list tbody").appendChild(clone);
 }
-
 // ________________ BUILDING A NEW LIST  ________________
+//  ----- this function takes care of both filtering and sorting
 function buildList() {
   const currentList = filterList(studentArray);
   const sortedList = sortList(currentList);
@@ -224,7 +242,8 @@ function sortList(sortedList) {
   return sortedList;
 }
 
-// -------- TO DO: SEARCHFUNCTION --------
+// ________________ SEARCH ________________
+//  -------- TO DO: search
 // function search() {}
 
 function filterExpelled() {}
@@ -233,9 +252,6 @@ function filterSquad() {}
 function filterPureblood() {}
 function filterHalfblood() {}
 function filterMuggle() {}
-
-// -------- SEARCHFUNCTION --------
-function search() {}
 
 // -------- ALL TOGGLE FUNCTIONS --------
 function makePrefect() {}
