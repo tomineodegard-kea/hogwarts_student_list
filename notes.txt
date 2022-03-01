@@ -1,1 +1,41 @@
 Deadline: Sunday, March 6th
+
+
+----------- PLAN FOR THE PREFECTS -----------
+1. Model
+- add prefect status to student
+
+2. View
+- add visible prefect (fixed values) in the list
+- get visible prefect status from the model, and display that in the list
+
+3. Controller
+- (fake prefects): add a toggle button to make each student a prefect or not
+- design the logic for the rules ...
+- implement the logic with lots of basic functions
+- add user interface to logic
+    4. view: hardcoded warning-popup
+             dynamic warning-popup
+
+
+
+**** PREFECT RULES ****
+- Only two students from each house can be selected prefects. Usually a boy and a girl.
+- The user must be able to make any student a prefect, and also revoke the prefect-status at any time. 
+- You must include some sort of system to prevent more than two prefects from each house. 
+- It is up to you how to design this. 
+- If the user must manually revoke one prefect before creating a new, or if there is simply a confirmation box for this. 
+- You can also decide if you want to continue the gender-specific prefects, or allow two boys or two girls. 
+
+
+----------- PLAN FOR THE INQUISITORIAL SQUAD -----------
+
+1. Model
+
+2. View
+
+3. Controller
+
+**** INQUISITORIAL SQUAD RULES ****
+- The user must be able to appoint students to the inquisitorial squad, and remove them again. 
+- Any number of students can be appointed, but only pure-blood or students from Slytherin.
