@@ -43,6 +43,7 @@ function createStudents(data) {
 // ________________ CREATE THE STUDENT OBJECT, WITH CLEANED/PREPARED DATA ________________
 function prepareObject(object) {
   const Student = {
+    prefect: false,
     firstName: "",
     lastName: "",
     middleName: "",
@@ -50,7 +51,7 @@ function prepareObject(object) {
     image: "",
     house: "",
     gender: "",
-    prefect: false,
+    star: false,
     bloodStatus: "",
     inquisitorial: false,
     expelled: false,
@@ -119,16 +120,28 @@ function displayStudent(student) {
   clone.querySelector("[data-field=lastName]").textContent = student.lastName;
   clone.querySelector("[data-field=house]").textContent = student.house;
 
-  // ----- prefects
-  if (student.prefect === true) {
-    clone.querySelector("[data-field=prefect]").textContent = "🎖";
+  // ----- stars
+  if (student.star === true) {
+    clone.querySelector("[data-field=star]").textContent = "🎖";
   } else {
-    clone.querySelector("[data-field=prefect]").textContent = "☆";
+    clone.querySelector("[data-field=star]").textContent = "☆";
   }
 
+  clone.querySelector("[data-field=star]").addEventListener("click", clickStar);
+  function clickStar() {
+    console.log(student);
+    if (student.star === true) {
+      student.star = false;
+    } else {
+      student.star = true;
+    }
+    buildList();
+  }
+
+  // ----- prefects
+  clone.querySelector("[data-field=prefect]").dataset.prefect = student.prefect;
   clone.querySelector("[data-field=prefect]").addEventListener("click", clickPrefect);
   function clickPrefect() {
-    console.log(student);
     if (student.prefect === true) {
       student.prefect = false;
     } else {
