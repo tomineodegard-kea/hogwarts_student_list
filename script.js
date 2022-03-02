@@ -145,13 +145,15 @@ function displayStudent(student) {
     if (student.prefect === true) {
       student.prefect = false;
     } else {
-      student.prefect = true;
+      tryToMakePrefect(student);
+      // student.prefect = true;
     }
     buildList();
   }
 
   document.querySelector("#student_list tbody").appendChild(clone);
 }
+
 // ________________ BUILDING A NEW LIST  ________________
 //  ----- this function takes care of both filtering and sorting
 function buildList() {
@@ -242,9 +244,8 @@ function sortList(sortedList) {
   }
 
   sortedList = sortedList.sort(compareSortOption);
-  console.log("User chose to sort by:", settings.sortBy);
 
-  // the compare function compares two elements and return its opinion on which element should be first when sorted
+  // -------- the compare function compares two elements and return its opinion on which element should be first when sorted
   function compareSortOption(a, b) {
     if (a[settings.sortBy] < b[settings.sortBy]) {
       return -1 * direction;
@@ -266,10 +267,64 @@ function filterPureblood() {}
 function filterHalfblood() {}
 function filterMuggle() {}
 
-// -------- ALL TOGGLE FUNCTIONS --------
-function makePrefect() {}
-function undoPrefect() {}
-function makeSquadMember() {}
+// -------- ALL PREFECT TOGGLE FUNCTIONS --------
+function tryToMakePrefect(selectedStudent) {
+  const prefects = studentArray.filter((student) => student.prefect && student.house === selectedStudent.house);
+  const numberOfPrefects = prefects.length;
+
+  if (numberOfPrefects >= 2) {
+    console.log("WARNING! there can only be two prefects from each house");
+    removeAorB(prefects[0], prefects[1]);
+  } else {
+    makePrefect(selectedStudent);
+  }
+
+  function removeAorB(prefectA, prefectB) {
+    // -------- Ask user to ignore or remove prefectA or prefectB
+    document.querySelector("#remove_aorb").classList.remove("hide");
+    document.querySelector("#remove_aorb .close_button").addEventListener("click", closePrefectWarning);
+    document.querySelector("#remove_aorb #remove_a").addEventListener("click", clickRemoveA);
+    document.querySelector("#remove_aorb #remove_b").addEventListener("click", clickRemoveB);
+
+    // -------- Display names on prefects
+    document.querySelector("#remove_aorb [data-field=prefectA]").textContent = prefectA.firstName;
+    document.querySelector("#remove_aorb [data-field=prefectB]").textContent = prefectB.firstName;
+
+    // -------- If the user ignores it - do nothing
+    function closePrefectWarning() {
+      document.querySelector("#remove_aorb").classList.add("hide");
+      document.querySelector("#remove_aorb .close_button").removeEventListener("click", closePrefectWarning);
+      document.querySelector("#remove_aorb #remove_a").removeEventListener("click", clickRemoveA);
+      document.querySelector("#remove_aorb #remove_b").removeEventListener("click", clickRemoveB);
+    }
+
+    // -------- User would like to remove prefectA
+    function clickRemoveA() {
+      removePrefect(prefectA);
+      makePrefect(selectedStudent);
+      buildList();
+      closePrefectWarning();
+    }
+
+    // -------- User would like to remove prefectB
+    function clickRemoveB() {
+      removePrefect(prefectB);
+      makePrefect(selectedStudent);
+      buildList();
+      closePrefectWarning();
+    }
+  }
+
+  function removePrefect(student) {
+    student.prefect = false;
+  }
+
+  function makePrefect(student) {
+    student.prefect = true;
+  }
+}
+
+// function makeSquadMember() {}
 
 // -------- !! NON-REVERSIBLE FUNCTIONS !! --------
 function expelStudent() {}

@@ -34,11 +34,59 @@ button:hover {
   /* margin: 0 auto; */
 }
 
-/******** STYLE PREFECTS ********/
+/******** STYLE PREFECT SYMBOLS ********/
 td[data-field="prefect"]::after {
   content: "🏆";
 }
 
 td[data-field="prefect"][data-prefect="false"]::after {
   filter: grayscale(1);
+}
+
+/******** STYLING ON WARNING PREFECT ********/
+#pop_up {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: rgba(98, 114, 185, 0.664);
+  justify-content: center;
+  align-items: center;
+}
+#pop_up .dialog {
+  background-color: rgb(73, 143, 87);
+}
+
+#remove_aorb {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(216, 216, 216, 0.664);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.warning_prefect_popup {
+  box-shadow: 1px 1px 10px black;
+  padding: 4rem;
+  background-color: rgb(146, 151, 155);
+  position: relative;
+}
+
+.close_button {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+}
+.hide {
+  visibility: hidden;
+}
+
+.pop_up_container {
+  display: grid;
 }

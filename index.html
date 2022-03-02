@@ -69,6 +69,9 @@
       </tbody>
     </table>
 
+
+    <!-- the list of students -->
+    <section class="list_section">
     <template id="student">
       <tr>
         <td data-field="prefect" data-prefect="false"> </td>
@@ -77,12 +80,50 @@
         <td data-field="lastName">LAST NAME</td>
         <td data-field="house">HOUSE</td>
         <td>
-          <!-- <button id="read_more">Read more</button> -->
+          <button id="read_more">Read more</button>
         </td>
       </tr>
     </template>
+    </section>
 
 
+    <!-- popup with more details -->
+    <div id="pop_up" class="hide">
+      <div id="pop_up_wrapper" class="dialog">
+        <button class="close_button">X</button>
+          <div class="pop_up_container">
+          <img class="student_pic" src="" alt="" />
+          <img class="crest_img" src="" alt="" />
+            <div class="pop_up_texst">
+              <h3 class="fullName"></h3>
+              <p class="firstName"></p>
+              <p class="nickName"></p>
+              <p class="middleName"></p>
+              <p class="lastName"></p>
+              <p>Blood status:</p>
+              <p class="prefect">Prefect?<span class="status"></span></p>
+              <p>Expelled or not</p>
+              <p>Member of inquisitorial squad?</p>
+            </div>
+          </div>
+          <button id="expel_student">Expel this student</button>
+      </div>
+    </div> 
+
+
+    <!-- prefect warning popup -->
+    <div id="remove_aorb" class="modal hide">
+          <div class="warning_prefect_popup">
+            <button class="close_button">X</button>
+            <h2>Warning!</h2>
+            <p>There can only be two prefects per house...</p>
+            <p>Do you want to remove the one of the other prefects?</p>
+            <div>
+              <button id="remove_a">Remove <span data-field="prefectA">A</span></button>
+              <button id="remove_b">Remove <span data-field="prefectB">B</span></button>
+            </div>
+          </div>
+        </div>
     <script src="script.js"></script>
   </body>
 </html>
