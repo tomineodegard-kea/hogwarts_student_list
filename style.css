@@ -1,18 +1,31 @@
-body {
-  margin: 0 auto;
-}
-/******** GENERAL ********/
-h1,
-p,
-button,
-th,
-td {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-size: rem;
-  text-align: start;
+@font-face {
+  font-family: harrypotter;
+  src: url("fonts/harryp-mvz6w-webfont.woff") format("woff");
+  src: url("fonts/harryp-mvz6w-webfont.woff2") format("woff2");
 }
 
-/******** FILTER BUTTONS ********/
+body {
+  margin: 0 auto;
+  background-color: #f4f3ee;
+}
+/******** GENERAL STYLING ********/
+
+h1 {
+  font-family: harrypotter;
+  font-size: 5rem;
+  color: #d9a443;
+  margin: 1rem;
+}
+
+th,
+td,
+p {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 0.8rem;
+  color: rgb(24, 24, 24);
+}
+
+/******** BUTTONS ********/
 button {
   background-color: transparent;
   border: 1px solid black;
@@ -22,16 +35,26 @@ button {
 }
 
 button:hover {
-  background-color: burlywood;
+  background-color: #d9a54396;
 }
-
-/******** SORTING BUTTONS ********/
 
 /******** STUDENT LIST ********/
 #student_list {
   border: 1px solid black;
   width: 100vw;
   /* margin: 0 auto; */
+}
+
+#list tr:nth-child(odd) {
+  /* background-color: red; */
+}
+
+/******** LEFT COLUMN ********/
+#info_box {
+  /* background-color: rgb(223, 215, 208); */
+  padding: 0.6rem;
+  height: fit-content;
+  border: 1px solid black;
 }
 
 /******** STYLE PREFECT SYMBOLS ********/
@@ -51,12 +74,16 @@ td[data-field="prefect"][data-prefect="false"]::after {
   width: 100vw;
   height: 100vh;
   display: flex;
-  background-color: rgba(98, 114, 185, 0.664);
+  background-color: #bdbcb64d;
   justify-content: center;
   align-items: center;
 }
 #pop_up .dialog {
-  background-color: rgb(73, 143, 87);
+  background-color: #afafaf;
+  box-shadow: 1px 1px 10px black;
+  padding: 4rem;
+  position: relative;
+  border-radius: 0.5rem;
 }
 
 #remove_aorb {
@@ -74,7 +101,7 @@ td[data-field="prefect"][data-prefect="false"]::after {
 .warning_prefect_popup {
   box-shadow: 1px 1px 10px black;
   padding: 4rem;
-  background-color: rgb(146, 151, 155);
+  background-color: #d9a443;
   position: relative;
 }
 
@@ -89,4 +116,12 @@ td[data-field="prefect"][data-prefect="false"]::after {
 
 .pop_up_container {
   display: grid;
+}
+
+/******** MEDIAQUERY DESKTOP ********/
+@media screen and (min-width: 800px) {
+  #main_container {
+    display: flex;
+    justify-content: center;
+  }
 }
