@@ -36,17 +36,15 @@
 
           <p>
             Filter by student-staus:
-            <button class="filter" data-action="filter" data-filter="squad">Squad</button>
+            <button class="filter" data-action="filter" data-filter="inquisitorial">Inquisitorial Squad</button>
             <button class="filter" data-action="filter" data-filter="prefect">Prefect</button>
             <button class="filter" data-action="filter" data-filter="expelled">Expelled Students</button>
-            <button class="filter" data-action="filter" data-filter="non_expelled">Non Expelled Students</button>
           </p>
 
           <p>
             Filter by blood type:
             <button class="filter" data-action="filter" data-filter="pure_blood">Pure bloods</button>
             <button class="filter" data-action="filter" data-filter="half_blood">Half bloods</button>
-            <button class="filter" data-action="filter" data-filter="muggle">Muggles</button>
           </p>
 
           <hr />
@@ -55,9 +53,11 @@
 
           <p>
             Sort the list:
-            <button data-action="sort" data-sort-direction="asc" data-sort="firstName">A-Z</button>
-            <button data-action="sort" data-sort-direction="desc" data-sort="firstName">Z-A</button>
-            <button data-action="sort" data-sort-direction="desc" data-sort="star">Stars</button>
+            <button data-action="sort" data-sort-direction="asc" data-sort="firstName">First names A-Z</button>
+            <button data-action="sort" data-sort-direction="desc" data-sort="firstName">First names Z-A</button>
+            <button data-action="sort" data-sort-direction="asc" data-sort="firstName">Last names A-Z</button>
+            <button data-action="sort" data-sort-direction="desc" data-sort="firstName">Last names Z-A</button>
+            <button data-action="sort" data-sort-direction="desc" data-sort="inquisitorial">Inquisitorial Squad</button>
             <button data-action="sort" data-sort-direction="desc" data-sort="pure_blood">Pure bloods</button>
             <button data-action="sort" data-sort-direction="desc" data-sort="half_blood">Half bloods</button>
           </p>
@@ -122,8 +122,7 @@
         </div>
         <!------------- END READ MORE POPUP --------------->
 
-        <!------------- START WARNING POPUP --------------->
-        <!-- prefect warning popup -->
+        <!------------- START PREFECT WARNING POPUP --------------->
         <div id="remove_aorb" class="modal hide">
           <div class="warning_prefect_popup">
             <button class="close_button">X</button>
@@ -136,7 +135,19 @@
             </div>
           </div>
         </div>
-        <!------------- END WARNING POPUP --------------->
+        <!------------- END PREFECT WARNING POPUP --------------->
+
+        <!------------- START INQUISITORIAL WARNING POPUP --------------->
+        <div id="only_pureblood" class="modal hide">
+          <div id="pop_up_wrapper" class="dialog">
+            <div class="warning_inquisitorial_popup">
+              <button class="close_button">X</button>
+              <h2>Hey you!</h2>
+              <p>Only pure blooded students can be a member of the inquisitorial squad!</p>
+            </div>
+          </div>
+        </div>
+        <!------------- END INQUISITORIAL WARNING POPUP --------------->
 
         <script src="script.js"></script>
       </section>

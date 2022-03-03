@@ -149,7 +149,6 @@ function displayList(list) {
 }
 
 // ________________ DEFINE AND APPEND THE STUDENT-OBJECTS ________________
-
 function displayStudent(student) {
   const clone = document.querySelector("template#student").content.cloneNode(true);
 
@@ -170,7 +169,7 @@ function displayStudent(student) {
     buildList();
   }
 
-  // ----- Inquisitorial squad
+  // ----- Inquisitorial squad symbols
   if (student.inquisitorial === true) {
     clone.querySelector("[data-field=inquisitorial]").textContent = "🎖";
   } else {
@@ -181,20 +180,29 @@ function displayStudent(student) {
   clone.querySelector("[data-field=inquisitorial]").dataset.inquisitorial = student.inquisitorial;
   clone.querySelector("[data-field=inquisitorial]").addEventListener("click", tryToMakeInquisitorial);
 
-  function tryToMakeInquisitorial() {
-    if (student.bloodType === "pure_blood") {
-      if (student.inquisitorial === true) {
-        student.inquisitorial = false;
-      } else {
-        student.inquisitorial = true;
-      }
-      buildList();
-    } else {
-      alert("Only students with pure blood can be a member");
-    }
-  }
-
   document.querySelector("#student_list tbody").appendChild(clone);
+}
+
+function tryToMakeInquisitorial() {
+  if (student.bloodType === "pure_blood") {
+    if (student.inquisitorial === true) {
+      student.inquisitorial = false;
+    } else {
+      student.inquisitorial = true;
+    }
+    buildList();
+  } else {
+    inquisitorialPopUp();
+  }
+}
+
+function inquisitorialPopUp() {
+  document.querySelector("#only_pureblood").classList.remove("hide");
+  document.querySelector("#only_pureblood .close_button").addEventListener("click", closeInquisitorialPopUp);
+}
+
+function closeInquisitorialPopUp() {
+  document.querySelector("#only_pureblood").classList.add("hide");
 }
 
 // ________________ BUILDING A NEW LIST  ________________
@@ -225,12 +233,16 @@ function filterList(filteredList) {
   } else if (settings.filterBy === "boys") {
     filteredList = studentArray.filter(filterBoys);
   } else if (settings.filterBy === "girls") {
-    filteredList = studentArray.filter(filterBoys);
+    filteredList = studentArray.filter(filterGirls);
   } else if (settings.filterBy === "pure_blood") {
     filteredList = studentArray.filter(filterPureblood);
   } else if (settings.filterBy === "half_blood") {
     console.log(settings.filterBy);
     filteredList = studentArray.filter(filterHalfblood);
+  } else if (settings.filterBy === "inquisitorial") {
+    filteredList = studentArray.filter(filterInquisitorial);
+  } else if (settings.filterBy === "prefect") {
+    filteredList = studentArray.filter(filterPrefect);
   }
 
   return filteredList;
@@ -268,13 +280,17 @@ function filterBoys(student) {
 function filterGirls(student) {
   return student.gender === "Girl";
 }
-
 function filterPureblood(student) {
   return student.bloodType === "pure_blood";
 }
 function filterHalfblood(student) {
-  console.log(filterHalfblood);
   return student.bloodType === "half_blood";
+}
+function filterInquisitorial(student) {
+  return student.inquisitorial === true;
+}
+function filterPrefect(student) {
+  return student.prefect === true;
 }
 
 // ________________ ALL SORTING FUNCTIONS ________________
@@ -319,12 +335,7 @@ function sortList(sortedList) {
 
 // ________________ MORE FILTER FUNCTIONS ________________
 function filterExpelled() {}
-function filterNonExpelled() {}
-
-// ________________ OPTIONAL FILTER FUNCTIONS ________________
-function filterExpelled() {}
-function filterSquad() {}
-// function filterMuggle() {}
+function filterMuggle() {}
 
 // ________________ ALL PREFECT TOGGLE FUNCTIONS ________________
 function tryToMakePrefect(selectedStudent) {
@@ -429,14 +440,8 @@ function closePopUp() {
   document.querySelector("#pop_up").classList.add("hide");
 }
 
-// ________________ ALL INQUISITORIAL SQUAD FUNCTIONS ________________
-function makeInquisitorialSquad() {}
-// -------- THE RULES FOR THE INQUISITORIAL SQUAD --------
-// *** The user must be able to appoint students to the inquisitorial squad, and remove them again.
-// *** Any number of students can be appointed, but only pure-blood or students from Slytherin.
-
 // ________ SINGLE VIEW POPUP ________
-function showStudentDetails() {}
+// function showStudentDetails() {}
 
 // -------- !! NON-REVERSIBLE FUNCTIONS !! --------
 function expelStudent() {}
