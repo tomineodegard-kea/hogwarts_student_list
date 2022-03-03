@@ -8,150 +8,171 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main>
-      <!------------- START HEADING --------------->
-      <header>
-        <h1>Hogwarts Student List</h1>
-      </header>
-      <hr />
-      <!------------- END HEADING --------------->
+    <!------------- START FIRST SECTION --------------->
+    <section id="first_section">
+      <h1>Hogwarts Student List</h1>
+    </section>
 
-      <!------------- START CONTENT --------------->
-      <section id="content_container">
-        <!------------- START LEFT SIDE --------------->
-        <section id="left_side">
-          <p>
-            Filter by house:
-            <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
-            <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
-            <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
-            <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
-          </p>
+    <hr />
+    <!------------- END FIRST SECTION --------------->
 
-          <p>
-            Filter by gender:
-            <button class="filter" data-action="filter" data-filter="girls">Girls</button>
-            <button class="filter" data-action="filter" data-filter="boys">Boys</button>
-          </p>
+    <!------------- START CONTENT --------------->
+    <main id="content_container">
+      <!------------- START LEFT SIDE --------------->
+      <section class="left_side">
+        <div class="section_wrapper">
+          <h3>General student information</h3>
+          <div id="info_box">
+            <h4>Total members in each house:</h4>
+            <p>Gryffindor:<span data-field="gryffindor"></span> students</p>
+            <p>Slytherin:<span data-field="slytherin"></span> students</p>
+            <p>Hufflepuff:<span data-field="hufflepuff"></span> students</p>
+            <p>Ravenclaw:<span data-field="ravenclaw"></span> students</p>
+            <p>Total number of expelled students:</p>
+          </div>
+          <hr />
 
-          <p>
-            Filter by student-staus:
-            <button class="filter" data-action="filter" data-filter="inquisitorial">Inquisitorial Squad</button>
-            <button class="filter" data-action="filter" data-filter="prefect">Prefect</button>
-            <button class="filter" data-action="filter" data-filter="expelled">Expelled Students</button>
-          </p>
+          <div id="filter_section">
+            <p>
+              Filter by house:
+              <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
+              <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
+              <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
+              <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
+            </p>
 
-          <p>
-            Filter by blood type:
-            <button class="filter" data-action="filter" data-filter="pure_blood">Pure bloods</button>
-            <button class="filter" data-action="filter" data-filter="half_blood">Half bloods</button>
-          </p>
+            <p>
+              Filter by gender:
+              <button class="filter" data-action="filter" data-filter="girls">Girls</button>
+              <button class="filter" data-action="filter" data-filter="boys">Boys</button>
+            </p>
+
+            <p>
+              Filter by student-staus:
+              <button class="filter" data-action="filter" data-filter="inquisitorial">Inquisitorial Squad</button>
+              <button class="filter" data-action="filter" data-filter="prefect">Prefect</button>
+              <button class="filter" data-action="filter" data-filter="expelled">Expelled Students</button>
+            </p>
+
+            <p>
+              Filter by blood type:
+              <button class="filter" data-action="filter" data-filter="pureblood">Pure bloods</button>
+              <button class="filter" data-action="filter" data-filter="halfblood">Half bloods</button>
+            </p>
+          </div>
 
           <hr />
           <button class="filter" data-action="filter" data-filter="*">Remove filter</button>
           <hr />
 
-          <p>
-            Sort the list:
-            <button data-action="sort" data-sort-direction="asc" data-sort="firstName">First names A-Z</button>
-            <button data-action="sort" data-sort-direction="desc" data-sort="firstName">First names Z-A</button>
-            <button data-action="sort" data-sort-direction="asc" data-sort="firstName">Last names A-Z</button>
-            <button data-action="sort" data-sort-direction="desc" data-sort="firstName">Last names Z-A</button>
-            <button data-action="sort" data-sort-direction="desc" data-sort="inquisitorial">Inquisitorial Squad</button>
-            <button data-action="sort" data-sort-direction="desc" data-sort="pure_blood">Pure bloods</button>
-            <button data-action="sort" data-sort-direction="desc" data-sort="half_blood">Half bloods</button>
-          </p>
+          <div id="sorting_section">
+            <p>
+              Sort the list:
+              <button data-action="sort" data-sort-direction="asc" data-sort="firstName">First names A-Z</button>
+              <button data-action="sort" data-sort-direction="desc" data-sort="firstName">First names Z-A</button>
+              <button data-action="sort" data-sort-direction="asc" data-sort="firstName">Last names A-Z</button>
+              <button data-action="sort" data-sort-direction="desc" data-sort="firstName">Last names Z-A</button>
+              <button data-action="sort" data-sort-direction="desc" data-sort="inquisitorial">Inquisitorial Squad</button>
+              <button data-action="sort" data-sort-direction="desc" data-sort="pure_blood">Pure bloods</button>
+              <button data-action="sort" data-sort-direction="desc" data-sort="half_blood">Half bloods</button>
+            </p>
+          </div>
+        </div>
+      </section>
+      <!------------- END LEFT SIDE --------------->
+
+      <!------------- START RIGHT SIDE --------------->
+      <section class="right_side">
+        <table id="student_list">
+          <p id="number_of_students"></p>
+          <thead>
+            <tr id="sorting">
+              <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect 🏆</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="inquisitorial">Inquisitorial Squad 🎖</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
+            </tr>
+          </thead>
+          <tbody class="list">
+            <!-- student template will be copied and inserted here -->
+          </tbody>
+        </table>
+
+        <!-- the list of students -->
+        <section class="list_section">
+          <template id="student">
+            <tr>
+              <td data-field="prefect" data-prefect="false"></td>
+              <td data-field="inquisitorial"></td>
+              <td data-field="firstName">FIRST NAME</td>
+              <td data-field="lastName">LAST NAME</td>
+              <td data-field="house">HOUSE</td>
+              <td>
+                <button id="read_more_button" class="details">Read more</button>
+              </td>
+            </tr>
+          </template>
         </section>
-        <!------------- END LEFT SIDE --------------->
+      </section>
+      <!------------- END LEFT SIDE --------------->
 
-        <!------------- START RIGHT SIDE --------------->
-        <section id="right_side">
-          <table id="student_list">
-            <thead>
-              <tr id="sorting">
-                <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect 🏆</th>
-                <th data-action="sort" data-sort-direction="asc" data-sort="inquisitorial">Inquisitorial Squad 🎖</th>
-                <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
-                <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
-                <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
-              </tr>
-            </thead>
-            <tbody class="list">
-              <!-- student template will be copied and inserted here -->
-            </tbody>
-          </table>
+      <!------------- START READ MORE POPUP --------------->
+      <div id="pop_up" class="hide">
+        <div id="pop_up_wrapper" class="dialog">
+          <button class="close_button">X</button>
+          <div class="pop_up_container">
+            <article>
+              <img src="" alt="studentImg" class="studentImage" alt="studentImage">
+              <img src="" alt="houseCrest" class="houseCrest" alt="studentImage">
+            </article>
 
-          <!-- the list of students -->
-          <section class="list_section">
-            <template id="student">
-              <tr>
-                <td data-field="prefect" data-prefect="false"></td>
-                <td data-field="inquisitorial">☆</td>
-                <td data-field="firstName">FIRST NAME</td>
-                <td data-field="lastName">LAST NAME</td>
-                <td data-field="house">HOUSE</td>
-                <td>
-                  <button id="read_more_button" class="details">Read more</button>
-                </td>
-              </tr>
-            </template>
-          </section>
-        </section>
-        <!------------- END LEFT SIDE --------------->
-
-        <!------------- START READ MORE POPUP --------------->
-        <div id="pop_up" class="hide">
-          <div id="pop_up_wrapper" class="dialog">
-            <button class="close_button">X</button>
-            <div class="pop_up_container">
-              <img class="student_pic" src="" alt="" />
-              <img class="crest_img" src="" alt="" />
-              <div class="pop_up_texst">
+            <article>
+              <div class="popup_content">
                 <h3 class="fullName"></h3>
                 <p class="firstName"></p>
-                <p class="nickName"></p>
-                <p class="middleName"></p>
-                <p class="lastName"></p>
-                <p class="bloodType"></p>
-                <p class="prefect">Student status: <span class="status"></span></p>
-                <p class="inquisitorial_squad"></p>
-              </div>
-            </div>
-            <button id="expel_student">Expel this student</button>
+              <p class="nickName"></p>
+              <p class="middleName"></p>
+              <p class="lastName"></p>
+              <p class="bloodType"></p>
+              <p class="prefect">Student status: <span class="status"></span></p>
+              <p class="inquisitorial_squad"></p>
+            </article>
+          </div>
+          <button id="expel_student">Expel this student</button>
+        </div>
+      </div>
+      <!------------- END READ MORE POPUP --------------->
+
+      <!------------- START PREFECT WARNING POPUP --------------->
+      <div id="remove_aorb" class="modal hide">
+        <div class="warning_prefect_popup">
+          <button class="close_button">X</button>
+          <h2>Warning!</h2>
+          <p>There can only be two prefects per house...</p>
+          <p>Do you want to remove the one of the other prefects?</p>
+          <div>
+            <button id="remove_a">Remove <span data-field="prefectA">A</span></button>
+            <button id="remove_b">Remove <span data-field="prefectB">B</span></button>
           </div>
         </div>
-        <!------------- END READ MORE POPUP --------------->
+      </div>
+      <!------------- END PREFECT WARNING POPUP --------------->
 
-        <!------------- START PREFECT WARNING POPUP --------------->
-        <div id="remove_aorb" class="modal hide">
-          <div class="warning_prefect_popup">
+      <!------------- START INQUISITORIAL WARNING POPUP --------------->
+      <div id="only_pureblood" class="modal hide">
+        <div id="pop_up_wrapper" class="dialog">
+          <div class="warning_inquisitorial_popup">
             <button class="close_button">X</button>
-            <h2>Warning!</h2>
-            <p>There can only be two prefects per house...</p>
-            <p>Do you want to remove the one of the other prefects?</p>
-            <div>
-              <button id="remove_a">Remove <span data-field="prefectA">A</span></button>
-              <button id="remove_b">Remove <span data-field="prefectB">B</span></button>
-            </div>
+            <h2>Hey you!</h2>
+            <p>Only pure blooded students can be a member of the inquisitorial squad!</p>
           </div>
         </div>
-        <!------------- END PREFECT WARNING POPUP --------------->
+      </div>
+      <!------------- END INQUISITORIAL WARNING POPUP --------------->
 
-        <!------------- START INQUISITORIAL WARNING POPUP --------------->
-        <div id="only_pureblood" class="modal hide">
-          <div id="pop_up_wrapper" class="dialog">
-            <div class="warning_inquisitorial_popup">
-              <button class="close_button">X</button>
-              <h2>Hey you!</h2>
-              <p>Only pure blooded students can be a member of the inquisitorial squad!</p>
-            </div>
-          </div>
-        </div>
-        <!------------- END INQUISITORIAL WARNING POPUP --------------->
-
-        <script src="script.js"></script>
-      </section>
-      <!------------- END CONTENT --------------->
+      <script src="script.js"></script>
     </main>
+    <!------------- END CONTENT --------------->
   </body>
 </html>

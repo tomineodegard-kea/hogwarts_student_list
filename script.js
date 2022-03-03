@@ -66,7 +66,6 @@ function prepareObject(object) {
     image: "",
     house: "",
     gender: "",
-    star: false,
     bloodType: "",
     inquisitorial: false,
     expelled: false,
@@ -131,12 +130,12 @@ function prepareObject(object) {
 function findBloodType(student) {
   const pureBlood = allBloodTypes.pure.includes(student.lastName);
   if (pureBlood === true) {
-    return "pure_blood";
+    return "pureblood";
   }
 
   const halfBlood = allBloodTypes.half.includes(student.lastName);
   if (halfBlood === true) {
-    return "half_blood";
+    return "halfblood";
   }
 
   return "muggle";
@@ -152,6 +151,7 @@ function displayList(list) {
 function displayStudent(student) {
   const clone = document.querySelector("template#student").content.cloneNode(true);
 
+  // ----- Info displayed in default list
   clone.querySelector("[data-field=firstName]").textContent = student.firstName;
   clone.querySelector("[data-field=lastName]").textContent = student.lastName;
   clone.querySelector("[data-field=house]").textContent = student.house;
@@ -169,19 +169,13 @@ function displayStudent(student) {
     buildList();
   }
 
-  // ----- Inquisitorial squad symbols
-  if (student.inquisitorial === true) {
-    clone.querySelector("[data-field=inquisitorial]").textContent = "🎖";
-  } else {
-    clone.querySelector("[data-field=inquisitorial]").textContent = "☆";
-  }
-
-  // ----- Inquisitorial squad rules applied
+  // ----- Inquisitorial
+  // clone.querySelector("[data-field=inquisitorial]").textContent = student.inquisitorial;
   clone.querySelector("[data-field=inquisitorial]").dataset.inquisitorial = student.inquisitorial;
   clone.querySelector("[data-field=inquisitorial]").addEventListener("click", tryToMakeInquisitorial);
-
+  // ----- Function with the inquisitorial squad rules
   function tryToMakeInquisitorial() {
-    if (student.bloodType === "pure_blood") {
+    if (student.bloodType === "pureblood") {
       if (student.inquisitorial === true) {
         student.inquisitorial = false;
       } else {
@@ -210,7 +204,37 @@ function closeInquisitorialPopUp() {
 function buildList() {
   const currentList = filterList(studentArray);
   const sortedList = sortList(currentList);
+
+  displayInfoBox(sortedList);
   displayList(sortedList);
+}
+
+//----- Info box with counter
+function displayInfoBox(sortedList) {
+  // Display total number of students
+  document.querySelector("#number_of_students").textContent = `Currently displaying ${sortedList.length} students`;
+
+  // Diaplay infobox /factbox
+  let gryffindor = 0;
+  for (let obj of studentArray) {
+    if (obj.house === "Gryffindor") gryffindor++;
+    document.querySelector("#info_box [data-field=gryffindor]").textContent = " " + gryffindor;
+  }
+  let slytherin = 0;
+  for (let obj of studentArray) {
+    if (obj.house === "Slytherin") slytherin++;
+    document.querySelector("#info_box [data-field=slytherin]").textContent = " " + slytherin;
+  }
+  let hufflepuff = 0;
+  for (let obj of studentArray) {
+    if (obj.house === "Hufflepuff") hufflepuff++;
+    document.querySelector("#info_box [data-field=hufflepuff]").textContent = " " + hufflepuff;
+  }
+  let ravenclaw = 0;
+  for (let obj of studentArray) {
+    if (obj.house === "Ravenclaw") ravenclaw++;
+    document.querySelector("#info_box [data-field=ravenclaw]").textContent = " " + ravenclaw;
+  }
 }
 
 // ________________ FILTERING ________________
@@ -234,9 +258,9 @@ function filterList(filteredList) {
     filteredList = studentArray.filter(filterBoys);
   } else if (settings.filterBy === "girls") {
     filteredList = studentArray.filter(filterGirls);
-  } else if (settings.filterBy === "pure_blood") {
+  } else if (settings.filterBy === "pureblood") {
     filteredList = studentArray.filter(filterPureblood);
-  } else if (settings.filterBy === "half_blood") {
+  } else if (settings.filterBy === "halfblood") {
     console.log(settings.filterBy);
     filteredList = studentArray.filter(filterHalfblood);
   } else if (settings.filterBy === "inquisitorial") {
@@ -281,10 +305,10 @@ function filterGirls(student) {
   return student.gender === "Girl";
 }
 function filterPureblood(student) {
-  return student.bloodType === "pure_blood";
+  return student.bloodType === "pureblood";
 }
 function filterHalfblood(student) {
-  return student.bloodType === "half_blood";
+  return student.bloodType === "halfblood";
 }
 function filterInquisitorial(student) {
   return student.inquisitorial === true;

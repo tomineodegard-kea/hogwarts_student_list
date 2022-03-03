@@ -4,11 +4,11 @@
   src: url("fonts/harryp-mvz6w-webfont.woff2") format("woff2");
 }
 
+/******** GENERAL STYLING ********/
 body {
   margin: 0 auto;
   background-color: #f4f3ee;
 }
-/******** GENERAL STYLING ********/
 
 h1 {
   font-family: harrypotter;
@@ -25,6 +25,17 @@ p {
   color: rgb(24, 24, 24);
 }
 
+#content_container {
+  display: grid;
+}
+
+#first_section h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+}
+
 /******** BUTTONS ********/
 button {
   background-color: transparent;
@@ -38,15 +49,10 @@ button:hover {
   background-color: #d9a54396;
 }
 
-/******** STUDENT LIST ********/
+/******** RIGHT COLUMN / STUDENT LIST ********/
 #student_list {
   border: 1px solid black;
   width: 100vw;
-  /* margin: 0 auto; */
-}
-
-#list tr:nth-child(odd) {
-  /* background-color: red; */
 }
 
 /******** LEFT COLUMN ********/
@@ -61,8 +67,15 @@ button:hover {
 td[data-field="prefect"]::after {
   content: "🏆";
 }
-
 td[data-field="prefect"][data-prefect="false"]::after {
+  filter: grayscale(1);
+}
+
+/******** STYLE INQUISITORAL SQUAD SYMBOLS ********/
+td[data-field="inquisitorial"]::after {
+  content: "🎖";
+}
+td[data-field="inquisitorial"][data-inquisitorial="false"]::after {
   filter: grayscale(1);
 }
 
@@ -136,14 +149,21 @@ td[data-field="prefect"][data-prefect="false"]::after {
   visibility: hidden;
 }
 
-.pop_up_container {
+/* .pop_up_container {
   display: grid;
-}
+} */
 
-/******** MEDIAQUERY DESKTOP ********/
-@media screen and (min-width: 800px) {
-  #main_container {
+/******** MEDIAQUERY START ********/
+/*---------- DESKTOP ----------*/
+@media (min-width: 700px) {
+  #content_container .section_wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+  }
+
+  #content_container .left_side .section_wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
   }
 }
