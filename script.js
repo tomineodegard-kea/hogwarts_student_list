@@ -180,20 +180,20 @@ function displayStudent(student) {
   clone.querySelector("[data-field=inquisitorial]").dataset.inquisitorial = student.inquisitorial;
   clone.querySelector("[data-field=inquisitorial]").addEventListener("click", tryToMakeInquisitorial);
 
-  document.querySelector("#student_list tbody").appendChild(clone);
-}
-
-function tryToMakeInquisitorial() {
-  if (student.bloodType === "pure_blood") {
-    if (student.inquisitorial === true) {
-      student.inquisitorial = false;
+  function tryToMakeInquisitorial() {
+    if (student.bloodType === "pure_blood") {
+      if (student.inquisitorial === true) {
+        student.inquisitorial = false;
+      } else {
+        student.inquisitorial = true;
+      }
+      buildList();
     } else {
-      student.inquisitorial = true;
+      inquisitorialPopUp();
     }
-    buildList();
-  } else {
-    inquisitorialPopUp();
   }
+
+  document.querySelector("#student_list tbody").appendChild(clone);
 }
 
 function inquisitorialPopUp() {
