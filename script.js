@@ -48,6 +48,7 @@ async function getJson() {
 function registerButtons() {
   document.querySelectorAll("[data-action='filter']").forEach((button) => button.addEventListener("click", selectFilter));
   document.querySelectorAll("[data-action='sort']").forEach((button) => button.addEventListener("click", selectSort));
+  document.querySelector("#search").addEventListener("input", searchFieldInput);
 }
 
 function createStudents(data) {
@@ -353,9 +354,16 @@ function sortList(sortedList) {
   return sortedList;
 }
 
-// ________________ SEARCH ________________
-//  -------- TO DO: search
-// function search() {}
+// ________________ SEARCH FUNCTION ________________
+function searchFieldInput(evt) {
+  // write to the list with only those elements in the studentArray that has properties containing the search frase
+  displayList(
+    studentArray.filter((elm) => {
+      // comparing in uppercase so that m is the same as M
+      return elm.firstName.toUpperCase().includes(evt.target.value.toUpperCase()) || elm.lastName.toUpperCase().includes(evt.target.value.toUpperCase());
+    })
+  );
+}
 
 // ________________ MORE FILTER FUNCTIONS ________________
 function filterExpelled() {}
