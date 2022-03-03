@@ -1,6 +1,7 @@
 "use strict";
-let students;
+// let students;
 let studentArray = [];
+let allBloodtypes = [];
 let filteredStudents;
 
 // ----- the setting is making sure the filter and sort functions have a default
@@ -14,7 +15,7 @@ window.addEventListener("DOMContentLoaded", start);
 
 // ________________ START FUNCTION ________________
 function start() {
-  console.log("The script is being read");
+  console.log("Start");
   registerButtons();
   getJson();
 }
@@ -22,11 +23,25 @@ function start() {
 // ________________ GET JSON ________________
 async function getJson() {
   console.log("getJson");
-  const url = "https://petlatkea.dk/2021/hogwarts/students.json";
-  let data = await fetch(url);
-  studentArray = await data.json();
+  const students = await getStudentJson();
+  allBloodtypes = await getBloodJson();
 
-  createStudents(studentArray);
+  // ----- race conditions with two async functions, making sure the students are loaded before the bloodtype-json
+  async function getStudentJson() {
+    console.log("getStudentJson");
+    const url = "https://petlatkea.dk/2021/hogwarts/students.json";
+    let data = await fetch(url);
+    const students = await data.json();
+    return students;
+  }
+  async function getBloodJson() {
+    console.log("getBloodJson");
+    const url = "https://petlatkea.dk/2021/hogwarts/families.json";
+    let data = await fetch(url);
+    const bloodTypes = await data.json();
+    return bloodTypes;
+  }
+  createStudents(students);
 }
 
 // ________________ REGISTRER BUTTONS ________________
@@ -40,7 +55,7 @@ function createStudents(data) {
   buildList();
 }
 
-// ________________ CREATE THE STUDENT OBJECT, WITH CLEANED/PREPARED DATA ________________
+// ________________ CREATE THE STUDENT OBJECT, WITH CLEANED/TRIMMED/PREPARED DATA ________________
 function prepareObject(object) {
   const Student = {
     prefect: false,
@@ -52,19 +67,19 @@ function prepareObject(object) {
     house: "",
     gender: "",
     star: false,
-    bloodStatus: "",
+    bloodType: "",
     inquisitorial: false,
     expelled: false,
   };
 
   const student = Object.create(Student);
 
-  // ----- trim all the objects
+  // ----- Trim all the objects
   let originalName = object.fullname.trim();
   let originalHouse = object.house.trim();
   let originalGender = object.gender.trim();
 
-  // ----- cleaning first name
+  // ----- Cleaning first name
   if (originalName.includes(" ")) {
     student.firstName = originalName.substring(originalName.indexOf(0), originalName.indexOf(" "));
   } else {
@@ -72,37 +87,54 @@ function prepareObject(object) {
   }
   student.firstName = student.firstName.substring(0, 1).toUpperCase() + student.firstName.substring(1).toLowerCase();
 
-  // ----- cleaning middle name
+  // ----- Cleaning middle name
   student.middleName = originalName.substring(originalName.indexOf(" ") + 1, originalName.lastIndexOf(" "));
   student.middleName = student.middleName.substring(0, 1).toUpperCase() + student.middleName.substring(1).toLowerCase();
 
-  //----- cleaning nickname
+  //----- Cleaning nickname
   if (originalName.includes('"')) {
-    student.middleName = undefined;
+    student.middleName = " ";
     student.nickName = originalName.substring(originalName.indexOf('"') + 1, originalName.lastIndexOf('"'));
   }
 
-  // ----- cleaning last name
+  // ----- Cleaning last name
   if (originalName.includes(" ")) {
     student.lastName = originalName.substring(originalName.lastIndexOf(" ") + 1);
     student.lastName = student.lastName.substring(0, 1).toUpperCase() + student.lastName.substring(1).toLowerCase();
   }
 
-  // ----- cleaning house
+  // ----- Cleaning house
   student.house = originalHouse;
   student.house = student.house.substring(0, 1).toUpperCase() + student.house.substring(1).toLowerCase();
 
-  // ----- cleaning gender
+  // ----- Cleaning gender
   student.gender = originalGender;
   student.gender = student.gender.substring(0, 1).toUpperCase() + student.gender.substring(1).toLowerCase();
 
-  // ----- cleaning images
+  // ----- Cleaning images
   let studentPicture = new Image();
   studentPicture.scr = "images/" + student.lastName + ".png";
   student.image = studentPicture.scr;
 
-  // console.table(student);
+  // ----- Call function that calculates blood
+  student.bloodType = findBloodType(student);
+
   return student;
+}
+
+// ----- Calculate the bloodtype
+function findBloodType(student) {
+  const pureBlood = allBloodtypes.pure.includes(student.lastName);
+  if (pureBlood === true) {
+    return "pure blood";
+  }
+
+  const halfBlood = allBloodtypes.half.includes(student.lastName);
+  if (halfBlood === true) {
+    return "half blood";
+  }
+
+  return "muggle";
 }
 
 // ________________ DISPLAYING THE STUDENT LIST ________________
@@ -119,26 +151,27 @@ function displayStudent(student) {
   clone.querySelector("[data-field=firstName]").textContent = student.firstName;
   clone.querySelector("[data-field=lastName]").textContent = student.lastName;
   clone.querySelector("[data-field=house]").textContent = student.house;
+  clone.querySelector("#read_more_button").addEventListener("click", () => showPopUp(student));
 
-  // ----- stars
-  if (student.star === true) {
-    clone.querySelector("[data-field=star]").textContent = "🎖";
+  // ----- Inquisitorial squad
+  if (student.inquisitorial === true) {
+    clone.querySelector("[data-field=inquisitorial]").textContent = "🎖";
   } else {
-    clone.querySelector("[data-field=star]").textContent = "☆";
+    clone.querySelector("[data-field=inquisitorial]").textContent = "☆";
   }
 
-  clone.querySelector("[data-field=star]").addEventListener("click", clickStar);
-  function clickStar() {
+  clone.querySelector("[data-field=inquisitorial]").addEventListener("click", clickInquisitorial);
+  function clickInquisitorial() {
     console.log(student);
-    if (student.star === true) {
-      student.star = false;
+    if (student.inquisitorial === true) {
+      student.inquisitorial = false;
     } else {
-      student.star = true;
+      student.inquisitorial = true;
     }
     buildList();
   }
 
-  // ----- prefects
+  // ----- Prefects
   clone.querySelector("[data-field=prefect]").dataset.prefect = student.prefect;
   clone.querySelector("[data-field=prefect]").addEventListener("click", clickPrefect);
   function clickPrefect() {
@@ -146,7 +179,6 @@ function displayStudent(student) {
       student.prefect = false;
     } else {
       tryToMakePrefect(student);
-      // student.prefect = true;
     }
     buildList();
   }
@@ -260,14 +292,18 @@ function sortList(sortedList) {
 //  -------- TO DO: search
 // function search() {}
 
+// ________________ MORE FILTER FUNCTIONS ________________
 function filterExpelled() {}
 function filterNonExpelled() {}
+
+// ________________ OPTIONAL FILTER FUNCTIONS ________________
+function filterExpelled() {}
 function filterSquad() {}
 function filterPureblood() {}
 function filterHalfblood() {}
 function filterMuggle() {}
 
-// -------- ALL PREFECT TOGGLE FUNCTIONS --------
+// ________________ ALL PREFECT TOGGLE FUNCTIONS ________________
 function tryToMakePrefect(selectedStudent) {
   const prefects = studentArray.filter((student) => student.prefect && student.house === selectedStudent.house);
   const numberOfPrefects = prefects.length;
@@ -324,11 +360,61 @@ function tryToMakePrefect(selectedStudent) {
   }
 }
 
-// function makeSquadMember() {}
+// ________________ POPUP/MORE DETAILS ________________
+function showPopUp(student) {
+  document.querySelector("#pop_up").classList.remove("hide");
+
+  document.querySelector("#pop_up .close_button").addEventListener("click", closePopUp);
+
+  document.querySelector("#pop_up .fullName").textContent = student.firstName + " " + student.nickName + " " + student.middleName + " " + student.lastName;
+  document.querySelector("#pop_up .firstName").textContent = "First name:" + " " + student.firstName;
+  document.querySelector("#pop_up .lastName").textContent = "Last name:" + " " + student.lastName;
+
+  // ----- Only show nick name if any
+  if (student.nickName === "") {
+    document.querySelector("#pop_up .nickName").textContent = student.nickName;
+  } else {
+    document.querySelector("#pop_up .nickName").textContent = "Nick name:" + " " + student.nickName;
+  }
+
+  // ----- Only show middle name if any
+  if (student.middleName === " " || student.middleName === "") {
+    document.querySelector("#pop_up .middleName").textContent = student.middleName;
+  } else {
+    document.querySelector("#pop_up .middleName").textContent = "Middle name:" + " " + student.middleName;
+  }
+
+  // ----- Show if prefect or not
+  if (student.prefect === true) {
+    document.querySelector("#pop_up .status").textContent = "This student is a prefect.";
+  } else if (student.prefect === false) {
+    document.querySelector("#pop_up .status").textContent = "This student is not a prefect.";
+  }
+
+  // ----- Show bloodstatus
+  document.querySelector("#pop_up .bloodtype").textContent = "Blood type:" + " " + student.bloodType;
+
+  // ----- Show if student is a part of the inquisitorial squad
+  if (student.inquisitorial === true) {
+    document.querySelector("#pop_up .inquisitorial_squad").textContent = student.firstName + " is a member of the inquisitorial squad";
+  } else if (student.prefect === false) {
+    document.querySelector("#pop_up .inquisitorial_squad").textContent = student.firstName + " is a not member of the inquisitorial squad";
+  }
+}
+
+function closePopUp() {
+  document.querySelector("#pop_up").classList.add("hide");
+}
+
+// ________________ ALL INQUISITORIAL SQUAD FUNCTIONS ________________
+function makeInquisitorialSquad() {}
+// -------- THE RULES FOR THE INQUISITORIAL SQUAD --------
+// *** The user must be able to appoint students to the inquisitorial squad, and remove them again.
+// *** Any number of students can be appointed, but only pure-blood or students from Slytherin.
+
+// ________ SINGLE VIEW POPUP ________
+function showStudentDetails() {}
 
 // -------- !! NON-REVERSIBLE FUNCTIONS !! --------
 function expelStudent() {}
 function hackTheSystem() {}
-
-// ________ SINGLE VIEW ________
-function showStudentDetails() {}
