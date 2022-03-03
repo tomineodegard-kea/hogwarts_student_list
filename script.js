@@ -1,7 +1,7 @@
 "use strict";
 // let students;
 let studentArray = [];
-let allBloodtypes = [];
+let allBloodTypes = [];
 let filteredStudents;
 
 // ----- the setting is making sure the filter and sort functions have a default
@@ -24,7 +24,7 @@ function start() {
 async function getJson() {
   console.log("getJson");
   const students = await getStudentJson();
-  allBloodtypes = await getBloodJson();
+  allBloodTypes = await getBloodJson();
 
   // ----- race conditions with two async functions, making sure the students are loaded before the bloodtype-json
   async function getStudentJson() {
@@ -116,6 +116,11 @@ function prepareObject(object) {
   studentPicture.scr = "images/" + student.lastName + ".png";
   student.image = studentPicture.scr;
 
+  // ----- Cleaning the blood types
+  // let originalBlood = student.bloodType;
+  // student.bloodType = originalBlood;
+  // originalBlood.replace("_", " ");
+
   // ----- Call function that calculates blood
   student.bloodType = findBloodType(student);
 
@@ -124,14 +129,14 @@ function prepareObject(object) {
 
 // ----- Calculate the bloodtype
 function findBloodType(student) {
-  const pureBlood = allBloodtypes.pure.includes(student.lastName);
+  const pureBlood = allBloodTypes.pure.includes(student.lastName);
   if (pureBlood === true) {
-    return "pure blood";
+    return "pure_blood";
   }
 
-  const halfBlood = allBloodtypes.half.includes(student.lastName);
+  const halfBlood = allBloodTypes.half.includes(student.lastName);
   if (halfBlood === true) {
-    return "half blood";
+    return "half_blood";
   }
 
   return "muggle";
@@ -153,24 +158,6 @@ function displayStudent(student) {
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector("#read_more_button").addEventListener("click", () => showPopUp(student));
 
-  // ----- Inquisitorial squad
-  if (student.inquisitorial === true) {
-    clone.querySelector("[data-field=inquisitorial]").textContent = "🎖";
-  } else {
-    clone.querySelector("[data-field=inquisitorial]").textContent = "☆";
-  }
-
-  clone.querySelector("[data-field=inquisitorial]").addEventListener("click", clickInquisitorial);
-  function clickInquisitorial() {
-    console.log(student);
-    if (student.inquisitorial === true) {
-      student.inquisitorial = false;
-    } else {
-      student.inquisitorial = true;
-    }
-    buildList();
-  }
-
   // ----- Prefects
   clone.querySelector("[data-field=prefect]").dataset.prefect = student.prefect;
   clone.querySelector("[data-field=prefect]").addEventListener("click", clickPrefect);
@@ -181,6 +168,30 @@ function displayStudent(student) {
       tryToMakePrefect(student);
     }
     buildList();
+  }
+
+  // ----- Inquisitorial squad
+  if (student.inquisitorial === true) {
+    clone.querySelector("[data-field=inquisitorial]").textContent = "🎖";
+  } else {
+    clone.querySelector("[data-field=inquisitorial]").textContent = "☆";
+  }
+
+  // ----- Inquisitorial squad rules applied
+  clone.querySelector("[data-field=inquisitorial]").dataset.inquisitorial = student.inquisitorial;
+  clone.querySelector("[data-field=inquisitorial]").addEventListener("click", tryToMakeInquisitorial);
+
+  function tryToMakeInquisitorial() {
+    if (student.bloodType === "pure_blood") {
+      if (student.inquisitorial === true) {
+        student.inquisitorial = false;
+      } else {
+        student.inquisitorial = true;
+      }
+      buildList();
+    } else {
+      alert("Only students with pure blood can be a member");
+    }
   }
 
   document.querySelector("#student_list tbody").appendChild(clone);
@@ -214,8 +225,14 @@ function filterList(filteredList) {
   } else if (settings.filterBy === "boys") {
     filteredList = studentArray.filter(filterBoys);
   } else if (settings.filterBy === "girls") {
-    filteredList = studentArray.filter(filterGirls);
+    filteredList = studentArray.filter(filterBoys);
+  } else if (settings.filterBy === "pure_blood") {
+    filteredList = studentArray.filter(filterPureblood);
+  } else if (settings.filterBy === "half_blood") {
+    console.log(settings.filterBy);
+    filteredList = studentArray.filter(filterHalfblood);
   }
+
   return filteredList;
 }
 
@@ -250,6 +267,14 @@ function filterBoys(student) {
 }
 function filterGirls(student) {
   return student.gender === "Girl";
+}
+
+function filterPureblood(student) {
+  return student.bloodType === "pure_blood";
+}
+function filterHalfblood(student) {
+  console.log(filterHalfblood);
+  return student.bloodType === "half_blood";
 }
 
 // ________________ ALL SORTING FUNCTIONS ________________
@@ -299,9 +324,7 @@ function filterNonExpelled() {}
 // ________________ OPTIONAL FILTER FUNCTIONS ________________
 function filterExpelled() {}
 function filterSquad() {}
-function filterPureblood() {}
-function filterHalfblood() {}
-function filterMuggle() {}
+// function filterMuggle() {}
 
 // ________________ ALL PREFECT TOGGLE FUNCTIONS ________________
 function tryToMakePrefect(selectedStudent) {
@@ -392,7 +415,7 @@ function showPopUp(student) {
   }
 
   // ----- Show bloodstatus
-  document.querySelector("#pop_up .bloodtype").textContent = "Blood type:" + " " + student.bloodType;
+  document.querySelector("#pop_up .bloodType").textContent = "Blood type:" + " " + student.bloodType;
 
   // ----- Show if student is a part of the inquisitorial squad
   if (student.inquisitorial === true) {

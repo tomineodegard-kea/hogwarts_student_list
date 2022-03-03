@@ -42,6 +42,13 @@
             <button class="filter" data-action="filter" data-filter="non_expelled">Non Expelled Students</button>
           </p>
 
+          <p>
+            Filter by blood type:
+            <button class="filter" data-action="filter" data-filter="pure_blood">Pure bloods</button>
+            <button class="filter" data-action="filter" data-filter="half_blood">Half bloods</button>
+            <button class="filter" data-action="filter" data-filter="muggle">Muggles</button>
+          </p>
+
           <hr />
           <button class="filter" data-action="filter" data-filter="*">Remove filter</button>
           <hr />
@@ -51,6 +58,8 @@
             <button data-action="sort" data-sort-direction="asc" data-sort="firstName">A-Z</button>
             <button data-action="sort" data-sort-direction="desc" data-sort="firstName">Z-A</button>
             <button data-action="sort" data-sort-direction="desc" data-sort="star">Stars</button>
+            <button data-action="sort" data-sort-direction="desc" data-sort="pure_blood">Pure bloods</button>
+            <button data-action="sort" data-sort-direction="desc" data-sort="half_blood">Half bloods</button>
           </p>
         </section>
         <!------------- END LEFT SIDE --------------->
@@ -103,9 +112,9 @@
                 <p class="nickName"></p>
                 <p class="middleName"></p>
                 <p class="lastName"></p>
-                <p class="bloodtype"></p>
+                <p class="bloodType"></p>
                 <p class="prefect">Student status: <span class="status"></span></p>
-                <p class="inquisitorial_squad"><span class="squad_status"></span></p>
+                <p class="inquisitorial_squad"></p>
               </div>
             </div>
             <button id="expel_student">Expel this student</button>
