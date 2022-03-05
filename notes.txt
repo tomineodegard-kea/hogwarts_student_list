@@ -39,3 +39,11 @@ Deadline: Sunday, March 6th
 **** INQUISITORIAL SQUAD RULES ****
 - The user must be able to appoint students to the inquisitorial squad, and remove them again. 
 - Any number of students can be appointed, but only pure-blood or students from Slytherin.
+
+
+----------- PLAN FOR THE BLOOD TYPE -----------
+
+The system must calculate blood-status for each student. 
+This is an indication of whether the student is from a pure wizarding family, or from a half-wizard, half-muggle family, or just plain muggle.
+
+- The json file provided is a list of pure-blooded and half-blooded students, but some students are represended on both lists

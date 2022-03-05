@@ -13,27 +13,27 @@
       <h1>Hogwarts Student List</h1>
     </section>
 
-    <hr />
+    
     <!------------- END FIRST SECTION --------------->
 
     <!------------- START CONTENT --------------->
     <main id="content_container">
       <!------------- START LEFT SIDE --------------->
       <section class="left_side">
-        <label for="search">Search:</label>
-          <input type="text" id="search" name="search" size="10" />
         <div class="section_wrapper">
+          <div id="search_wrapper">
+            <label for="search">Search:</label>
+              <input type="text" id="search" name="search" size="10" />
+          </div>
           <h3>General student information</h3>
           <div id="info_box">
-            <h4>Total members in each house:</h4>
             <p>Gryffindor:<span data-field="gryffindor"></span> students</p>
             <p>Slytherin:<span data-field="slytherin"></span> students</p>
             <p>Hufflepuff:<span data-field="hufflepuff"></span> students</p>
             <p>Ravenclaw:<span data-field="ravenclaw"></span> students</p>
             <p>Total number of expelled students:</p>
           </div>
-          <hr />
-
+        
           <div id="filter_section">
             <p>
               Filter by house:
@@ -63,7 +63,6 @@
             </p>
           </div>
 
-          <hr />
           <button class="filter" data-action="filter" data-filter="*">Remove filter</button>
           <hr />
 
@@ -84,11 +83,10 @@
       <!------------- END LEFT SIDE --------------->
 
       <!------------- START RIGHT SIDE --------------->
-      <section class="right_side">
-        <table id="student_list">
-          <p id="number_of_students"></p>
-          <thead>
-            <tr id="sorting">
+      <table id="student_list">
+        <p id="number_of_students"></p>
+        <thead>
+          <tr id="sorting">
               <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect 🏆</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="inquisitorial">Inquisitorial Squad 🎖</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
@@ -100,11 +98,12 @@
             <!-- student template will be copied and inserted here -->
           </tbody>
         </table>
-
-        <!-- the list of students -->
-        <section class="list_section">
-          <template id="student">
-            <tr>
+        
+        <section class="right_side">
+          <!-- the list of students -->
+          <section class="list_section">
+            <template id="student">
+              <tr>
               <td data-field="prefect" data-prefect="false"></td>
               <td data-field="inquisitorial"></td>
               <td data-field="firstName">FIRST NAME</td>
@@ -125,8 +124,8 @@
           <button class="close_button">X</button>
           <div class="pop_up_container">
             <article>
+              <img src="" alt="houseCrest" class="houseCrest" alt="houseCrest">
               <img src="" alt="studentImg" class="studentImage" alt="studentImage">
-              <img src="" alt="houseCrest" class="houseCrest" alt="studentImage">
             </article>
 
             <article>

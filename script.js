@@ -2,6 +2,7 @@
 // let students;
 let studentArray = [];
 let allBloodTypes = [];
+let allExpelled = [];
 let filteredStudents;
 
 // ----- the setting is making sure the filter and sort functions have a default
@@ -268,6 +269,8 @@ function filterList(filteredList) {
     filteredList = studentArray.filter(filterInquisitorial);
   } else if (settings.filterBy === "prefect") {
     filteredList = studentArray.filter(filterPrefect);
+  } else if (settings.filterBy === "expelled") {
+    filteredList = allExpelled;
   }
 
   return filteredList;
@@ -316,6 +319,10 @@ function filterInquisitorial(student) {
 }
 function filterPrefect(student) {
   return student.prefect === true;
+}
+
+function filterExpelled(student) {
+  return student.expelled === "expelled";
 }
 
 // ________________ ALL SORTING FUNCTIONS ________________
@@ -428,13 +435,45 @@ function tryToMakePrefect(selectedStudent) {
 
 // ________________ POPUP/MORE DETAILS ________________
 function showPopUp(student) {
+  console.log("popup with details");
   document.querySelector("#pop_up").classList.remove("hide");
 
+  // ----- Adding an event listener to the closePopUp btn, so the user can close the popup
   document.querySelector("#pop_up .close_button").addEventListener("click", closePopUp);
 
+  // -------- ALL EXPEL FUNCTIONS --------
+  // ----- Adding an event listener to the expelStudent btn, so the user can click this
+  document.querySelector("#pop_up #expel_student").addEventListener("click", expelStudent);
+
+  function expelStudent() {
+    document.querySelector("#expel_student").removeEventListener("click", expelStudent);
+    // splicing the student from the array with indexOf //
+    const expelSplice = studentArray.splice(studentArray.indexOf(student), 1)[0];
+    expelSplice.expelled = true;
+    allExpelled.push(expelSplice);
+    buildList();
+    closePopUp();
+  }
+
+  // -------- ALL STUDENT INFORMATION --------
+  // ----- All students have this information, therefor using text content to fill in the fullName, firsName and lastName
   document.querySelector("#pop_up .fullName").textContent = student.firstName + " " + student.nickName + " " + student.middleName + " " + student.lastName;
   document.querySelector("#pop_up .firstName").textContent = "First name:" + " " + student.firstName;
   document.querySelector("#pop_up .lastName").textContent = "Last name:" + " " + student.lastName;
+
+  // ----- House crest image
+  document.querySelector(".houseCrest").src = `crests/${student.house}.png`;
+
+  // ----- Student image
+  document.querySelector(".studentImage").src = `images/${student.lastName}_${student.firstName[0]}.png`;
+  // ----- There are two students with the lastName Patil, therefor I made an if/else for this to make sure I got the right img
+  if (student.lastName === "Patil") {
+    document.querySelector(".studentImage").src = `images/${student.lastName.toLowerCase()}_${student.firstName.toLowerCase()}.png`;
+  } else {
+    document.querySelector(".studentImage").src = `images/${student.lastName.substring(student.lastName.lastIndexOf(""), student.lastName.indexOf("-") + 1).toLowerCase()}_${student.firstName
+      .substring(0, 1)
+      .toLowerCase()}.png`;
+  }
 
   // ----- Only show nick name if any
   if (student.nickName === "") {
