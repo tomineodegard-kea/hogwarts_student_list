@@ -172,9 +172,9 @@ function displayStudent(student) {
   }
 
   // ----- Inquisitorial
-  // clone.querySelector("[data-field=inquisitorial]").textContent = student.inquisitorial;
   clone.querySelector("[data-field=inquisitorial]").dataset.inquisitorial = student.inquisitorial;
   clone.querySelector("[data-field=inquisitorial]").addEventListener("click", tryToMakeInquisitorial);
+
   // ----- Function with the inquisitorial squad rules
   function tryToMakeInquisitorial() {
     if (student.bloodType === "pureblood") {
@@ -237,6 +237,16 @@ function displayInfoBox(sortedList) {
     if (obj.house === "Ravenclaw") ravenclaw++;
     document.querySelector("#info_box [data-field=ravenclaw]").textContent = " " + ravenclaw;
   }
+  let nonExpelled = 0;
+  for (let obj of studentArray) {
+    if (obj.expelled === false) nonExpelled++;
+    document.querySelector("#expelled_counter [data-field=nonexpelled]").textContent = " " + nonExpelled;
+  }
+  let expelled = 0;
+  for (let obj of studentArray) {
+    if (obj.expelled === true) expelled++;
+    document.querySelector("#expelled_counter [data-field=expelled]").textContent = " " + expelled;
+  }
 }
 
 // ________________ FILTERING ________________
@@ -286,7 +296,6 @@ function selectFilter(userEvent) {
 function setFilter(filter) {
   settings.filterBy = filter;
   buildList();
-  console.log(`Chosen filter: ${filter}`);
 }
 
 // -------- all filter functions
@@ -457,8 +466,6 @@ function showPopUp(student) {
 
     // -------- Display name of the current student
     document.querySelector("#expel_pop_up [data-field=confirmStudent]").textContent = student.firstName + " " + student.lastName;
-
-    // areYouSureExpelPopUp();
   }
 
   function yesExpelStudent() {
@@ -491,20 +498,6 @@ function showPopUp(student) {
   document.querySelector("#pop_up .firstName").textContent = "First name:" + " " + student.firstName;
   document.querySelector("#pop_up .lastName").textContent = "Last name:" + " " + student.lastName;
 
-  // ----- House crest image
-  document.querySelector(".houseCrest").src = `crests/${student.house}.png`;
-
-  // ----- Student image
-  document.querySelector(".studentImage").src = `images/${student.lastName}_${student.firstName[0]}.png`;
-  // ----- There are two students with the lastName Patil, therefor I made an if/else for this to make sure I got the right img
-  if (student.lastName === "Patil") {
-    document.querySelector(".studentImage").src = `images/${student.lastName.toLowerCase()}_${student.firstName.toLowerCase()}.png`;
-  } else {
-    document.querySelector(".studentImage").src = `images/${student.lastName.substring(student.lastName.lastIndexOf(""), student.lastName.indexOf("-") + 1).toLowerCase()}_${student.firstName
-      .substring(0, 1)
-      .toLowerCase()}.png`;
-  }
-
   // ----- Only show nick name if any
   if (student.nickName === "") {
     document.querySelector("#pop_up .nickName").textContent = student.nickName;
@@ -517,6 +510,20 @@ function showPopUp(student) {
     document.querySelector("#pop_up .middleName").textContent = student.middleName;
   } else {
     document.querySelector("#pop_up .middleName").textContent = "Middle name:" + " " + student.middleName;
+  }
+
+  // ----- House crest image
+  // document.querySelector(".houseCrest").src = `crests/${student.house}.png`;
+
+  // ----- Student image
+  document.querySelector(".studentImage").src = `images/${student.lastName}_${student.firstName[0]}.png`;
+  // ----- There are two students with the lastName Patil, therefor I made an if/else for this to make sure I got the right img
+  if (student.lastName === "Patil") {
+    document.querySelector(".studentImage").src = `images/${student.lastName.toLowerCase()}_${student.firstName.toLowerCase()}.png`;
+  } else {
+    document.querySelector(".studentImage").src = `images/${student.lastName.substring(student.lastName.lastIndexOf(""), student.lastName.indexOf("-") + 1).toLowerCase()}_${student.firstName
+      .substring(0, 1)
+      .toLowerCase()}.png`;
   }
 
   // ----- Show if prefect or not
@@ -534,6 +541,25 @@ function showPopUp(student) {
     document.querySelector("#pop_up .inquisitorial_squad").textContent = student.firstName + " is a member of the inquisitorial squad";
   } else if (student.prefect === false) {
     document.querySelector("#pop_up .inquisitorial_squad").textContent = student.firstName + " is a not member of the inquisitorial squad";
+  }
+
+  // ----- Change color and crest on popup according to house
+  if (student.house === "Gryffindor") {
+    document.querySelector(".houseCrest").src = "crests/gryffindor.png";
+    document.querySelector(".read_more_wrapper").style.backgroundColor = "#650100";
+    document.querySelector(".popup_content").style.color = "#F2F2F2";
+  } else if (student.house === "Slytherin") {
+    document.querySelector(".houseCrest").src = "crests/slytherin.png";
+    document.querySelector(".read_more_wrapper").style.backgroundColor = "#2E751B";
+    document.querySelector(".popup_content").style.color = "#F2F2F2";
+  } else if (student.house === "Hufflepuff") {
+    document.querySelector(".houseCrest").src = "crests/hufflepuff.png";
+    document.querySelector(".read_more_wrapper").style.backgroundColor = "#EEBA30";
+    document.querySelector(".popup_content").style.color = "#F2F2F2";
+  } else if (student.house === "Ravenclaw") {
+    document.querySelector(".houseCrest").src = "crests/ravenclaw.png";
+    document.querySelector(".read_more_wrapper").style.backgroundColor = "#1A3956";
+    document.querySelector(".popup_content").style.color = "#F2F2F2";
   }
 }
 
