@@ -85,6 +85,19 @@ td[data-field="inquisitorial"][data-inquisitorial="false"]::after {
   filter: grayscale(1);
 }
 
+#list tr:nth-child(odd) td {
+  background-color: #d9a54391;
+}
+
+th.sortby[data-sort-direction="asc"]::after {
+  content: " ▼";
+  font-size: 0.8rem;
+}
+th.sortby[data-sort-direction="desc"]::after {
+  content: " ▲";
+  font-size: 0.8rem;
+}
+
 /******** READ MORE POPUP ********/
 #pop_up {
   position: fixed;
@@ -169,7 +182,8 @@ td[data-field="inquisitorial"][data-inquisitorial="false"]::after {
   #info_box {
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
+    margin: 0.5rem;
+    padding: 2rem;
     height: fit-content;
     border: 1px solid black;
   }

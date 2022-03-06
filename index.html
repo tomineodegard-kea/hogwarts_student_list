@@ -24,7 +24,7 @@
             <label for="search">Search:</label>
             <input type="text" id="search" name="search" size="10" />
           </div>
-          <h3>General student information</h3>
+          <h3>House members in total</h3>
           <div id="info_box">
             <p>Gryffindor:<span data-field="gryffindor"></span> students</p>
             <p>Slytherin:<span data-field="slytherin"></span> students</p>
@@ -39,13 +39,11 @@
           <hr />
 
           <div id="filter_section">
-            <p>
-              Filter by house:
-              <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
-              <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
-              <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
-              <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
-            </p>
+            <h4>Filter by house:</h4>
+            <a><img src="crests/gryffindor.png" class="filter" data-action="filter" data-filter="gryffindor" alt="Gryffindor crest" width="auto" height="100" /></a>
+            <a><img src="crests/slytherin.png" class="filter" data-action="filter" data-filter="slytherin" alt="Slytherin crest" width="auto" height="100" /> </a>
+            <a><img src="crests/hufflepuff.png" class="filter" data-action="filter" data-filter="hufflepuff" alt="Hufflepuff crest" width="auto" height="100" /> </a>
+            <a><img src="crests/ravenclaw.png" class="filter" data-action="filter" data-filter="ravenclaw" alt="Ravenclaw crest" width="auto" height="100" /> </a>
 
             <p>
               Filter by gender:
@@ -70,18 +68,19 @@
           <button class="filter" data-action="filter" data-filter="*">Remove filter</button>
           <hr />
 
-          <div id="sorting_section">
+          <!-- I chose to remove this and just use the clicking the tr/th, like the animal base example -->
+          <!-- <div id="sorting_section">
             <p>
               Sort the list:
+              <button data-action="sort" data-sort-direction="desc" data-sort="inquisitorial">Inquisitorial Squad</button>
+              <button data-action="sort" data-sort-direction="desc" data-sort="pure_blood">Pure bloods</button>
+              <button data-action="sort" data-sort-direction="desc" data-sort="half_blood">Half bloods</button>
               <button data-action="sort" data-sort-direction="asc" data-sort="firstName">First names A-Z</button>
               <button data-action="sort" data-sort-direction="desc" data-sort="firstName">First names Z-A</button>
               <button data-action="sort" data-sort-direction="asc" data-sort="firstName">Last names A-Z</button>
               <button data-action="sort" data-sort-direction="desc" data-sort="firstName">Last names Z-A</button>
-              <button data-action="sort" data-sort-direction="desc" data-sort="inquisitorial">Inquisitorial Squad</button>
-              <button data-action="sort" data-sort-direction="desc" data-sort="pure_blood">Pure bloods</button>
-              <button data-action="sort" data-sort-direction="desc" data-sort="half_blood">Half bloods</button>
             </p>
-          </div>
+          </div> -->
         </div>
       </section>
       <!------------- END LEFT SIDE --------------->

@@ -47,7 +47,7 @@ async function getJson() {
 
 // ________________ REGISTRER BUTTONS ________________
 function registerButtons() {
-  document.querySelectorAll("[data-action='filter']").forEach((button) => button.addEventListener("click", selectFilter));
+  document.querySelectorAll(".filter").forEach((button) => button.addEventListener("click", selectFilter));
   document.querySelectorAll("[data-action='sort']").forEach((button) => button.addEventListener("click", selectSort));
   document.querySelector("#search").addEventListener("input", searchFieldInput);
 }
@@ -335,16 +335,27 @@ function filterExpelled(student) {
 }
 
 // ________________ ALL SORTING FUNCTIONS ________________
-// -------- sorting options
 function selectSort(event) {
   const sortBy = event.target.dataset.sort;
   const sortDir = event.target.dataset.sortDirection;
-  console.log("Sorting by:", sortBy, "- in the sort direction:", sortDir);
+  const oldElement = document.querySelector(`[data-sort='${settings.sortBy}']`);
 
-  setSorting(sortBy, sortDir);
+  oldElement.classList.remove("sortby");
+
+  // -------- show the arrow
+  event.target.classList.add("sortby");
+
+  // -------- toogle the direction
+  if (sortDir === "asc") {
+    event.target.dataset.sortDirection = "desc";
+  } else {
+    event.target.dataset.sortDirection = "asc";
+  }
+  console.log(`user selected ${sortBy} - ${sortDir}`);
+  setSort(sortBy, sortDir);
 }
 
-function setSorting(sortBy, sortDir) {
+function setSort(sortBy, sortDir) {
   settings.sortBy = sortBy;
   settings.sortDir = sortDir;
   buildList();
@@ -357,10 +368,9 @@ function sortList(sortedList) {
   } else {
   }
 
-  sortedList = sortedList.sort(compareSortOption);
+  sortedList = sortedList.sort(sortByProperty);
 
-  // -------- the compare function compares two elements and return its opinion on which element should be first when sorted
-  function compareSortOption(a, b) {
+  function sortByProperty(a, b) {
     if (a[settings.sortBy] < b[settings.sortBy]) {
       return -1 * direction;
     } else {
@@ -382,7 +392,7 @@ function searchFieldInput(evt) {
 }
 
 // ________________ MORE FILTER FUNCTIONS ________________
-function filterMuggle() {}
+// function filterMuggle() {}
 
 // ________________ ALL PREFECT TOGGLE FUNCTIONS ________________
 function tryToMakePrefect(selectedStudent) {
@@ -526,19 +536,19 @@ function showPopUp(student) {
       .toLowerCase()}.png`;
   }
 
-  // ----- Show if prefect or not
+  // ----- Show if the student is a prefect or not
   if (student.prefect === true) {
-    document.querySelector("#pop_up .status").textContent = "This student is a prefect.";
+    document.querySelector("#pop_up .status").textContent = `${student.firstName} is a prefect 🏆`;
   } else if (student.prefect === false) {
-    document.querySelector("#pop_up .status").textContent = "This student is not a prefect.";
+    document.querySelector("#pop_up .status").textContent = `${student.firstName} is not a prefect.`;
   }
 
-  // ----- Show bloodstatus
+  // ----- Show the students bloodtype
   document.querySelector("#pop_up .bloodType").textContent = "Blood type:" + " " + student.bloodType;
 
   // ----- Show if student is a part of the inquisitorial squad
   if (student.inquisitorial === true) {
-    document.querySelector("#pop_up .inquisitorial_squad").textContent = student.firstName + " is a member of the inquisitorial squad";
+    document.querySelector("#pop_up .inquisitorial_squad").textContent = student.firstName + " is a member of the inquisitorial squad 🎖";
   } else if (student.prefect === false) {
     document.querySelector("#pop_up .inquisitorial_squad").textContent = student.firstName + " is a not member of the inquisitorial squad";
   }
@@ -568,4 +578,44 @@ function closePopUp() {
 }
 
 // -------- !! NON-REVERSIBLE FUNCTIONS !! --------
-function hackTheSystem() {}
+function hackTheSystem() {
+  console.log("hacking");
+  addTomine();
+  // randomizeBlood();
+}
+function addTomine() {
+  let me = Object.create(studentArray);
+  let mystudentPicture = new Image();
+  me.firstName = "Tomine";
+  me.lastName = "Ødegård";
+  me.middleName = "of Norway";
+  me.nickName = "Nap Queen";
+  me.house = "Gryffindor";
+  me.bloodType = "pureblood";
+  me.prefect = true;
+  mystudentPicture.scr = "images/potter_h.png";
+  me.image = mystudentPicture.scr;
+
+  studentArray.push(me);
+  buildList();
+}
+
+// function randomizeBlood() {
+//   allStudents.forEach((student) => {
+//     if (student.bloodType.pure === true || student.bloodType.muggle === true) {
+//       student.bloodType.half = false;
+//       student.bloodType.muggle = false;
+//       student.bloodType.pure = true;
+//     } else {
+//       let randomBlood = Math.floor(Math.random() * 3);
+//       student.bloodType.pure = false;
+//       if (randomBlood === 0) {
+//         student.bloodType.pure = true;
+//       } else if (randomBlood === 1) {
+//         student.bloodType.half = true;
+//       } else {
+//         student.bloodType.muggle = true;
+//       }
+//     }
+//   });
+// }
