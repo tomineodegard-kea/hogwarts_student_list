@@ -28,6 +28,7 @@ p {
 
 #content_container {
   display: grid;
+  align-content: center;
 }
 
 #first_section h1 {
@@ -62,10 +63,6 @@ button:hover {
 }
 
 /******** RIGHT COLUMN / STUDENT LIST ********/
-#student_list {
-  border: 1px solid black;
-  width: 100vw;
-}
 
 /******** LEFT COLUMN ********/
 
@@ -168,10 +165,8 @@ th.sortby[data-sort-direction="desc"]::after {
 /*---------- DESKTOP ----------*/
 
 @media (min-width: 700px) {
-  #content_container .section_wrapper {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 10px;
+  #content_container {
+    margin: 2rem;
   }
 
   #content_container .left_side .section_wrapper {
