@@ -97,7 +97,7 @@ td[data-field="inquisitorial"][data-inquisitorial="false"]::after {
   justify-content: center;
   align-items: center;
 }
-#pop_up .dialog {
+#pop_up .read_more_wrapper {
   background-color: #afafaf;
   box-shadow: 1px 1px 10px black;
   padding: 4rem;
@@ -105,47 +105,39 @@ td[data-field="inquisitorial"][data-inquisitorial="false"]::after {
   border-radius: 0.5rem;
 }
 
-/******** WARNING ONLY PURE BLOOD INQUISITORIAL SQUAD ********/
-#only_pureblood {
+/******** GENERAL STYLING FOR ALL WARNING POPUPS ********/
+
+.warning_popup {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(216, 216, 216, 0.664);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.warning_inquisitorial_popup {
+.warning_popup_content {
   box-shadow: 1px 1px 10px black;
   padding: 4rem;
-  background-color: #d9a443;
   position: relative;
   border-radius: 0.5rem;
 }
 
-/******** STYLING ON WARNING PREFECT ********/
-#remove_aorb {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(216, 216, 216, 0.664);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.warning_prefect_popup {
-  box-shadow: 1px 1px 10px black;
-  padding: 4rem;
+.inquisitorial_warning {
   background-color: #d9a443;
-  position: relative;
 }
 
+.expel_warning {
+  background-color: #a84720;
+}
+
+.prefect_warning {
+  background-color: #d9a443;
+}
+
+/* ---- BUTTONS ----*/
 .close_button {
   position: absolute;
   right: 0.5rem;
@@ -155,9 +147,9 @@ td[data-field="inquisitorial"][data-inquisitorial="false"]::after {
   visibility: hidden;
 }
 
-/* .pop_up_container {
+.student_info {
   display: grid;
-} */
+}
 
 /******** MEDIAQUERY START ********/
 /*---------- DESKTOP ----------*/
