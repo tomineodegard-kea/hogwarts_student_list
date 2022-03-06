@@ -13,7 +13,6 @@
       <h1>Hogwarts Student List</h1>
     </section>
 
-    
     <!------------- END FIRST SECTION --------------->
 
     <!------------- START CONTENT --------------->
@@ -23,7 +22,7 @@
         <div class="section_wrapper">
           <div id="search_wrapper">
             <label for="search">Search:</label>
-              <input type="text" id="search" name="search" size="10" />
+            <input type="text" id="search" name="search" size="10" />
           </div>
           <h3>General student information</h3>
           <div id="info_box">
@@ -33,7 +32,7 @@
             <p>Ravenclaw:<span data-field="ravenclaw"></span> students</p>
             <p>Total number of expelled students:</p>
           </div>
-        
+
           <div id="filter_section">
             <p>
               Filter by house:
@@ -87,23 +86,23 @@
         <p id="number_of_students"></p>
         <thead>
           <tr id="sorting">
-              <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect 🏆</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="inquisitorial">Inquisitorial Squad 🎖</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
-            </tr>
-          </thead>
-          <tbody class="list">
-            <!-- student template will be copied and inserted here -->
-          </tbody>
-        </table>
-        
-        <section class="right_side">
-          <!-- the list of students -->
-          <section class="list_section">
-            <template id="student">
-              <tr>
+            <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect 🏆</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="inquisitorial">Inquisitorial Squad 🎖</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
+          </tr>
+        </thead>
+        <tbody class="list">
+          <!-- student template will be copied and inserted here -->
+        </tbody>
+      </table>
+
+      <section class="right_side">
+        <!-- the list of students -->
+        <section class="list_section">
+          <template id="student">
+            <tr>
               <td data-field="prefect" data-prefect="false"></td>
               <td data-field="inquisitorial"></td>
               <td data-field="firstName">FIRST NAME</td>
@@ -120,34 +119,48 @@
 
       <!------------- START READ MORE POPUP --------------->
       <div id="pop_up" class="hide">
-        <div id="pop_up_wrapper" class="dialog">
+        <div class="read_more_wrapper">
           <button class="close_button">X</button>
-          <div class="pop_up_container">
-            <article>
-              <img src="" alt="houseCrest" class="houseCrest" alt="houseCrest">
-              <img src="" alt="studentImg" class="studentImage" alt="studentImage">
-            </article>
+          <article class="image_and_crest">
+            <img src="" alt="houseCrest" class="houseCrest" alt="houseCrest" />
+            <img src="" alt="studentImg" class="studentImage" alt="studentImage" />
+          </article>
 
-            <article>
-              <div class="popup_content">
-                <h3 class="fullName"></h3>
-                <p class="firstName"></p>
-              <p class="nickName"></p>
-              <p class="middleName"></p>
-              <p class="lastName"></p>
-              <p class="bloodType"></p>
-              <p class="prefect">Student status: <span class="status"></span></p>
-              <p class="inquisitorial_squad"></p>
-            </article>
-          </div>
+          <article class="popup_content">
+            <h3 class="fullName"></h3>
+            <p class="firstName"></p>
+            <p class="nickName"></p>
+            <p class="middleName"></p>
+            <p class="lastName"></p>
+            <p class="bloodType"></p>
+            <p class="prefect">Student status: <span class="status"></span></p>
+            <p class="inquisitorial_squad"></p>
+          </article>
           <button id="expel_student">Expel this student</button>
         </div>
       </div>
       <!------------- END READ MORE POPUP --------------->
 
+      <!------------- START EXPEL STUDENT POPUP --------------->
+      <div id="expel_pop_up" class="warning_popup hide">
+        <div class="expel_warning warning_popup_content">
+          <button class="close_button">X</button>
+          <div class="pop_up_container">
+            <h2>Warning!</h2>
+            <p>You are about to expel <span data-field="confirmStudent">confirmStudent</span>.</p>
+            <p>You can not regret this action. Are you sure?</p>
+          </div>
+          <div>
+            <button id="confirmStudent">Yes expel this student.</button>
+            <button id="dontConfirmStudent">No, I do not want to expel this student.</button>
+          </div>
+        </div>
+      </div>
+      <!------------- END EXPEL STUDENT POPUP --------------->
+
       <!------------- START PREFECT WARNING POPUP --------------->
-      <div id="remove_aorb" class="modal hide">
-        <div class="warning_prefect_popup">
+      <div id="remove_aorb" class="warning_popup hide">
+        <div class="prefect_warning warning_popup_content">
           <button class="close_button">X</button>
           <h2>Warning!</h2>
           <p>There can only be two prefects per house...</p>
@@ -161,14 +174,14 @@
       <!------------- END PREFECT WARNING POPUP --------------->
 
       <!------------- START INQUISITORIAL WARNING POPUP --------------->
-      <div id="only_pureblood" class="modal hide">
-        <div id="pop_up_wrapper" class="dialog">
-          <div class="warning_inquisitorial_popup">
-            <button class="close_button">X</button>
-            <h2>Hey you!</h2>
-            <p>Only pure blooded students can be a member of the inquisitorial squad!</p>
-          </div>
+      <div id="only_pureblood" class="warning_popup hide">
+        <!-- <div id="pop_up_wrapper" class="dialog"> -->
+        <div class="inquisitorial_warning warning_popup_content">
+          <button class="close_button">X</button>
+          <h2>Hey you!</h2>
+          <p>Only pure blooded students can be a member of the inquisitorial squad!</p>
         </div>
+        <!-- </div> -->
       </div>
       <!------------- END INQUISITORIAL WARNING POPUP --------------->
 

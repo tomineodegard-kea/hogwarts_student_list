@@ -373,7 +373,6 @@ function searchFieldInput(evt) {
 }
 
 // ________________ MORE FILTER FUNCTIONS ________________
-function filterExpelled() {}
 function filterMuggle() {}
 
 // ________________ ALL PREFECT TOGGLE FUNCTIONS ________________
@@ -443,16 +442,47 @@ function showPopUp(student) {
 
   // -------- ALL EXPEL FUNCTIONS --------
   // ----- Adding an event listener to the expelStudent btn, so the user can click this
-  document.querySelector("#pop_up #expel_student").addEventListener("click", expelStudent);
+  document.querySelector("#pop_up #expel_student").addEventListener("click", tryToExpelStudent);
 
-  function expelStudent() {
-    document.querySelector("#expel_student").removeEventListener("click", expelStudent);
-    // splicing the student from the array with indexOf //
+  function tryToExpelStudent() {
+    document.querySelector("#expel_student").removeEventListener("click", tryToExpelStudent);
+
+    // -------- Ask user to ignore or expel student
+    console.log("tryToExpelStudent");
+    document.querySelector("#expel_pop_up").classList.remove("hide");
+
+    document.querySelector("#expel_pop_up .close_button").addEventListener("click", closeExpelWarning);
+    document.querySelector("#expel_pop_up #confirmStudent").addEventListener("click", yesExpelStudent);
+    document.querySelector("#expel_pop_up #dontConfirmStudent").addEventListener("click", doNotExpelStudent);
+
+    // -------- Display name of the current student
+    document.querySelector("#expel_pop_up [data-field=confirmStudent]").textContent = student.firstName + " " + student.lastName;
+
+    // areYouSureExpelPopUp();
+  }
+
+  function yesExpelStudent() {
+    console.log("yesExpelStudent");
+    // -------- Using splice to create a new array with the expelled students with indexOf
     const expelSplice = studentArray.splice(studentArray.indexOf(student), 1)[0];
     expelSplice.expelled = true;
     allExpelled.push(expelSplice);
-    buildList();
+    closeExpelWarning();
     closePopUp();
+    buildList();
+  }
+
+  function doNotExpelStudent() {
+    console.log("doNotExpelStudent");
+    closeExpelWarning();
+    buildList();
+  }
+
+  function closeExpelWarning() {
+    document.querySelector("#expel_pop_up").classList.add("hide");
+    document.querySelector("#expel_pop_up .close_button").removeEventListener("click", closeExpelWarning);
+    document.querySelector("#expel_pop_up #confirmStudent").removeEventListener("click", yesExpelStudent);
+    document.querySelector("#expel_pop_up #dontConfirmStudent").removeEventListener("click", doNotExpelStudent);
   }
 
   // -------- ALL STUDENT INFORMATION --------
@@ -511,9 +541,5 @@ function closePopUp() {
   document.querySelector("#pop_up").classList.add("hide");
 }
 
-// ________ SINGLE VIEW POPUP ________
-// function showStudentDetails() {}
-
 // -------- !! NON-REVERSIBLE FUNCTIONS !! --------
-function expelStudent() {}
 function hackTheSystem() {}
