@@ -6,10 +6,14 @@
 
 main {
   margin: 3rem;
+  height: 100vh;
 }
 
 body {
-  background-color: rgb(236, 235, 230);
+  background: url("thunderstorm.jpg");
+  height: 100%;
+  width: 100%;
+
 }
 
 header {
@@ -50,26 +54,34 @@ th,
 td {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-size: 0.8rem;
-  color: rgb(24, 24, 24);
+  color: rgb(255, 255, 255);
+}
+
+h3, h4 {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  color: rgb(255, 255, 255);
 }
 
 button {
   background-color: transparent;
-  border: 1px solid black;
+  border: 1px solid rgb(197, 197, 197);
   padding: 0.5rem;
   margin: 0.2rem;
   border-radius: 0.5rem;
   width: fit-content;
+  color: white;
 }
 
 button:hover {
-  background-color: #d9a54396;
+  background-color: #0A151B;
 }
 
 .primary_cta {
-  background-color: #d9a443;
+  background-color: #0A151B;
 
 }
+
 
 /******** STYLE PREFECT SYMBOLS ********/
 td[data-field="prefect"]::after {
@@ -87,8 +99,9 @@ td[data-field="inquisitorial"][data-inquisitorial="false"]::after {
   filter: grayscale(1);
 }
 
-#list tr:nth-child(odd) td {
-  background-color: #d9a54391;
+
+.list tr:nth-child(odd) td {
+  background-color: #0A151B;
 }
 
 th.sortby[data-sort-direction="asc"]::after {
@@ -108,9 +121,9 @@ th.sortby[data-sort-direction="desc"]::after {
   width: 100vw;
   height: 100vh;
   display: flex;
-  background-color: #bdbcb64d;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0,0,0,0.8);
 }
 #pop_up .read_more_wrapper {
   background-color: #afafaf;
@@ -132,6 +145,7 @@ th.sortby[data-sort-direction="desc"]::after {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #d9a443;
 }
 
 .warning_popup_content {
@@ -146,7 +160,7 @@ th.sortby[data-sort-direction="desc"]::after {
 }
 
 .expel_warning {
-  background-color: #a84720;
+  background-color: #d9a443;
 }
 
 .prefect_warning {
@@ -172,11 +186,48 @@ th.sortby[data-sort-direction="desc"]::after {
   display: grid;
   grid-template-columns: 3fr 6fr;
   gap: 4rem;
+  height: 100vh;
+}
+
+.left_side {
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 
 .right_side {
   display: flex;
   flex-direction: column;
+}
+
+.search_label {
+  color: white;
+}
+
+.placeholder_text {
+  color: white;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+
+#search {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px rgb(197, 197, 197) solid;
+  width: 100%;
+}
+
+#search:active {
+  border: none;
+}
+
+#search_wrapper {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
 }
 
 

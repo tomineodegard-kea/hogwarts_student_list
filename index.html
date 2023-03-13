@@ -17,15 +17,19 @@
         <section class="left_side">
           <div class="section_wrapper">
             <div id="search_wrapper">
-              <label for="search">Search:</label>
-              <input type="text" id="search" name="search" size="10" />
+              <input type="text" id="search" name="search" size="10" placeholder="Serach for a specific student here" class="placeholder_text" style="outline:none"/>
+              <label class="search_label" for="search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+              </label>
             </div>
             <h3>House members in total</h3>
             <div id="info_box">
-              <p>Gryffindor:<span data-field="gryffindor"></span> students</p>
-              <p>Slytherin:<span data-field="slytherin"></span> students</p>
-              <p>Hufflepuff:<span data-field="hufflepuff"></span> students</p>
-              <p>Ravenclaw:<span data-field="ravenclaw"></span> students</p>
+              <strong><p>Gryffindor:</strong><span data-field="gryffindor"></span> students</p>
+              <strong><p>Slytherin:</strong><span data-field="slytherin"></span> students</p>
+              <p><strong><p>Hufflepuff:</strong><span data-field="hufflepuff"></span> students</p>
+              <strong><p>Ravenclaw:</strong><span data-field="ravenclaw"></span> students</p>
             </div>
             <div id="expelled_counter">
               <h4>Students in total:</h4>
@@ -35,7 +39,7 @@
             <hr />
 
             <div id="filter_section">
-              <h4>Filtering by...</h4>
+              <h4>Filtering by house</h4>
               <div class="filterHousecrest">
                 <a><img src="crests/gryffindor.png" class="filter" data-action="filter" data-filter="gryffindor" alt="Gryffindor crest" width="auto" height="100" /></a>
                 <a><img src="crests/slytherin.png" class="filter" data-action="filter" data-filter="slytherin" alt="Slytherin crest" width="auto" height="100" /> </a>
@@ -62,10 +66,10 @@
               </p>
             </div>
             <div>
-              <button class="filter" data-action="filter" data-filter="expelled">Show only expelled Students</button>
+              <button class="filter" data-action="filter" data-filter="expelled">Show only expelled students</button>
             </div>
             
-            <button class="filter primary_cta" data-action="filter" data-filter="*">Remove filter</button>
+            <button class="filter primary_cta" data-action="filter" data-filter="*">Clear filter</button>
             <hr />
           </div>
         </section>
@@ -157,7 +161,7 @@
         <div id="only_pureblood" class="warning_popup hide">
           <div class="inquisitorial_warning warning_popup_content">
             <button class="close_button">X</button>
-            <h2>Hey you!</h2>
+            <h2>Oh oh...</h2>
             <p>Only pure blooded students can be a member of the inquisitorial squad!</p>
           </div>
         </div>

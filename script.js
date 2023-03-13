@@ -556,19 +556,19 @@ function showPopUp(student) {
   // ----- Change color and crest on popup according to house
   if (student.house === "Gryffindor") {
     document.querySelector(".houseCrest").src = "crests/gryffindor.png";
-    document.querySelector(".read_more_wrapper").style.backgroundColor = "#650100";
+    document.querySelector(".read_more_wrapper").style.backgroundColor = "#213f4e";
     document.querySelector(".popup_content").style.color = "#F2F2F2";
   } else if (student.house === "Slytherin") {
     document.querySelector(".houseCrest").src = "crests/slytherin.png";
-    document.querySelector(".read_more_wrapper").style.backgroundColor = "#2E751B";
+    document.querySelector(".read_more_wrapper").style.backgroundColor = "#213f4e";
     document.querySelector(".popup_content").style.color = "#F2F2F2";
   } else if (student.house === "Hufflepuff") {
     document.querySelector(".houseCrest").src = "crests/hufflepuff.png";
-    document.querySelector(".read_more_wrapper").style.backgroundColor = "#EEBA30";
+    document.querySelector(".read_more_wrapper").style.backgroundColor = "#213f4e";
     document.querySelector(".popup_content").style.color = "#F2F2F2";
   } else if (student.house === "Ravenclaw") {
     document.querySelector(".houseCrest").src = "crests/ravenclaw.png";
-    document.querySelector(".read_more_wrapper").style.backgroundColor = "#1A3956";
+    document.querySelector(".read_more_wrapper").style.backgroundColor = "#213f4e";
     document.querySelector(".popup_content").style.color = "#F2F2F2";
   }
 }
